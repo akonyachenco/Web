@@ -3,8 +3,9 @@ package ru.ssau.todo.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.ssau.todo.entity.Task;
+import ru.ssau.todo.exception.BusinessLogicException;
 import ru.ssau.todo.exception.NotFoundException;
-import ru.ssau.todo.repository.TaskRepository;
+import ru.ssau.todo.service.TaskService;
 
 import java.net.URI;
 import java.time.LocalDateTime;
@@ -14,10 +15,10 @@ import java.util.List;
 @RequestMapping("/tasks")
 public class TaskController {
 
-    private final TaskRepository taskRepository;
+    private final TaskService taskService;
 
-    public TaskController(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
     }
 
     @GetMapping
@@ -26,28 +27,33 @@ public class TaskController {
                                @RequestParam long userId) {
         if(from == null) from = LocalDateTime.MIN;
         if(to == null) to = LocalDateTime.MAX;
-        return ResponseEntity.ok(taskRepository.findAll(from, to, userId));
+        return ResponseEntity.ok(taskService.findAll(from, to, userId));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTask(@PathVariable long id) {
-        return taskRepository.findById(id)
+        return taskService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
-        Task res = taskRepository.create(task);
-        return ResponseEntity.created(URI.create("/tasks/" + res.getId()))
-                .body(res);
+    public ResponseEntity<?> createTask(@RequestBody Task task) {
+        try {
+            Task res = taskService.create(task);
+            return ResponseEntity.created(URI.create("/tasks/" + res.getId()))
+                    .body(res);
+        }
+        catch (BusinessLogicException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateTask(@PathVariable long id, @RequestBody Task task) {
         task.setId(id);
         try{
-            taskRepository.update(task);
+            taskService.update(task);
             return ResponseEntity.ok().build();
         }
         catch (NotFoundException nfe) {
@@ -60,12 +66,17 @@ public class TaskController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTask(@PathVariable long id) {
-        taskRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+        try{
+            taskService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        catch (BusinessLogicException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/active/count")
     public ResponseEntity<Long> getActiveTaskCount(@RequestParam long userId) {
-        return ResponseEntity.ok(taskRepository.countActiveTasksByUserId(userId));
+        return ResponseEntity.ok(taskService.countActiveTasksByUserId(userId));
     }
 }

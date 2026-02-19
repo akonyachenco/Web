@@ -1,5 +1,6 @@
 package ru.ssau.todo.repository.impl;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import ru.ssau.todo.entity.Task;
 import ru.ssau.todo.entity.TaskStatus;
@@ -14,6 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
+@Profile("default")
 public class TaskInMemoryRepository implements TaskRepository {
 
     private final Map<Long, Task> storage = new HashMap<>();
@@ -83,4 +85,5 @@ public class TaskInMemoryRepository implements TaskRepository {
     public void setCounter(long counter) {
         this.counter = counter;
     }
+
 }
