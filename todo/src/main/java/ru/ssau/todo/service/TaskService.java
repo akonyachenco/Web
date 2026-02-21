@@ -2,7 +2,9 @@ package ru.ssau.todo.service;
 
 import org.springframework.stereotype.Service;
 import ru.ssau.todo.entity.Task;
+import ru.ssau.todo.entity.TaskStatus;
 import ru.ssau.todo.exception.BusinessLogicException;
+import ru.ssau.todo.exception.NotFoundException;
 import ru.ssau.todo.repository.TaskRepository;
 
 import java.time.LocalDateTime;
@@ -18,9 +20,12 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public Task create(Task task) {
+    public Task create(Task task) throws BusinessLogicException {
         long activeCount = taskRepository.countActiveTasksByUserId(task.getCreatedBy());
-        if (activeCount >= 10) throw new BusinessLogicException("Maximum 10 active tasks per user");
+        if ((task.getStatus().equals(TaskStatus.OPEN)
+                || task.getStatus().equals(TaskStatus.IN_PROGRESS))
+                && activeCount >= 10)
+            throw new BusinessLogicException("Maximum 10 active tasks per user");
         return taskRepository.create(task);
     }
 
@@ -35,12 +40,22 @@ public class TaskService {
     }
 
 
-    public void update(Task task) throws Exception {
+    public void update(Task task) throws NotFoundException, BusinessLogicException
+    {
+        if (task.getStatus().equals(TaskStatus.OPEN) || task.getStatus().equals(TaskStatus.IN_PROGRESS)) {
+            Optional<Task> taskOptional = taskRepository.findById(task.getId());
+            if (taskOptional.isPresent()
+                    && (taskOptional.get().getStatus().equals(TaskStatus.CLOSED)
+                    || taskOptional.get().getStatus().equals(TaskStatus.DONE))
+                    && taskRepository.countActiveTasksByUserId(taskOptional.get().getCreatedBy()) >= 10) {
+                throw new BusinessLogicException("Maximum 10 active tasks per user");
+            }
+        }
         taskRepository.update(task);
     }
 
 
-    public void deleteById(long id) {
+    public void deleteById(long id) throws BusinessLogicException {
         Optional<Task> taskOptional = taskRepository.findById(id);
         if(taskOptional.isPresent()) {
             if(taskOptional.get().getCreatedAt().isAfter(LocalDateTime.now().minusMinutes(5)))

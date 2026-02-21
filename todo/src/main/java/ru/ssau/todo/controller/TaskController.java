@@ -9,7 +9,9 @@ import ru.ssau.todo.service.TaskService;
 
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/tasks")
@@ -45,7 +47,10 @@ public class TaskController {
                     .body(res);
         }
         catch (BusinessLogicException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("errorMessage", e.getMessage());
+            errorResponse.put("stackTrace", e.getStackTrace());
+            return ResponseEntity.badRequest().body(errorResponse);
         }
     }
 
@@ -58,9 +63,11 @@ public class TaskController {
         }
         catch (NotFoundException nfe) {
             return ResponseEntity.notFound().build();
-        }
-        catch (Exception e) {
-            return ResponseEntity.noContent().build();
+        } catch (BusinessLogicException e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("errorMessage", e.getMessage());
+            errorResponse.put("stackTrace", e.getStackTrace());
+            return ResponseEntity.badRequest().body(errorResponse);
         }
     }
 
@@ -71,7 +78,10 @@ public class TaskController {
             return ResponseEntity.noContent().build();
         }
         catch (BusinessLogicException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("errorMessage", e.getMessage());
+            errorResponse.put("stackTrace", e.getStackTrace());
+            return ResponseEntity.badRequest().body(errorResponse);
         }
     }
 

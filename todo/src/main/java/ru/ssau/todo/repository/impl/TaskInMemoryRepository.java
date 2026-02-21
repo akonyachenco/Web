@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import ru.ssau.todo.entity.Task;
 import ru.ssau.todo.entity.TaskStatus;
+import ru.ssau.todo.exception.BusinessLogicException;
 import ru.ssau.todo.exception.NotFoundException;
 import ru.ssau.todo.repository.TaskRepository;
 
@@ -27,7 +28,7 @@ public class TaskInMemoryRepository implements TaskRepository {
 
 
     @Override
-    public Task create(Task task) {
+    public Task create(Task task) throws BusinessLogicException {
         if(task == null) throw new IllegalArgumentException("Task cannot be null");
 
         task.setCreatedAt(LocalDateTime.now());
@@ -54,9 +55,9 @@ public class TaskInMemoryRepository implements TaskRepository {
     }
 
     @Override
-    public void update(Task task) throws Exception {
+    public void update(Task task) throws NotFoundException, BusinessLogicException {
         long id = task.getId();
-        if(!storage.containsKey(id))
+        if (!storage.containsKey(id))
             throw new NotFoundException("Task with id " + task.getId() + " not found");
 
         Task taskToUpdate = storage.get(id);
@@ -65,7 +66,7 @@ public class TaskInMemoryRepository implements TaskRepository {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(long id) throws BusinessLogicException {
         storage.remove(id);
     }
 
@@ -77,13 +78,4 @@ public class TaskInMemoryRepository implements TaskRepository {
                         || task.getStatus().equals(TaskStatus.OPEN))
                 .count();
     }
-
-    public long getCounter() {
-        return counter;
-    }
-
-    public void setCounter(long counter) {
-        this.counter = counter;
-    }
-
 }

@@ -1,6 +1,8 @@
 package ru.ssau.todo.repository;
 
 import ru.ssau.todo.entity.Task;
+import ru.ssau.todo.exception.BusinessLogicException;
+import ru.ssau.todo.exception.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,7 +22,7 @@ public interface TaskRepository {
      * @return сохраненный экземпляр задачи с назначенным идентификатором.
      * @throws IllegalArgumentException если передана пустая задача (null).
      */
-    Task create(Task task);
+    Task create(Task task) throws BusinessLogicException;
 
     /**
      * Выполняет поиск задачи по её уникальному идентификатору.
@@ -46,16 +48,16 @@ public interface TaskRepository {
      * Поиск записи для обновления осуществляется по полю ID, содержащемуся в объекте task.
      *
      * @param task объект задачи с обновленными данными.
-     * @throws **Exception** **(специализированное исключение)** если задача с таким ID не существует.
+     * @throws **NotFoundException** **(специализированное исключение)** если задача с таким ID не существует.
      */
-    void update(Task task) throws Exception;
+    void update(Task task) throws NotFoundException, BusinessLogicException;
 
     /**
      * Удаляет задачу из хранилища по её идентификатору.
      *
      * @param id идентификатор задачи, которую необходимо удалить.
      */
-    void deleteById(long id);
+    void deleteById(long id) throws BusinessLogicException;
 
     /**
      * Подсчитывает количество "активных" задач для конкретного пользователя.
