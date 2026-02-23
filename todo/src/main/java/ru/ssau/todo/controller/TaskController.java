@@ -2,6 +2,7 @@ package ru.ssau.todo.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.ssau.todo.dto.TaskDto;
 import ru.ssau.todo.entity.Task;
 import ru.ssau.todo.exception.BusinessLogicException;
 import ru.ssau.todo.exception.NotFoundException;
@@ -24,25 +25,28 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Task>> getTasks(@RequestParam(required = false) LocalDateTime from,
-                               @RequestParam(required = false) LocalDateTime to,
-                               @RequestParam long userId) {
-        if(from == null) from = LocalDateTime.MIN;
-        if(to == null) to = LocalDateTime.MAX;
+    public ResponseEntity<List<TaskDto>> getTasks(@RequestParam(required = false) LocalDateTime from,
+                                                  @RequestParam(required = false) LocalDateTime to,
+                                                  @RequestParam long userId) {
+        if(from == null) from = LocalDateTime.now().minusDays(10000);
+        if(to == null) to = LocalDateTime.now().plusDays(1);
         return ResponseEntity.ok(taskService.findAll(from, to, userId));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTask(@PathVariable long id) {
-        return taskService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<TaskDto> getTask(@PathVariable long id) {
+        try {
+            return ResponseEntity.ok(taskService.findById(id));
+        }
+        catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
-    public ResponseEntity<?> createTask(@RequestBody Task task) {
+    public ResponseEntity<?> createTask(@RequestBody TaskDto task) {
         try {
-            Task res = taskService.create(task);
+            TaskDto res = taskService.create(task);
             return ResponseEntity.created(URI.create("/tasks/" + res.getId()))
                     .body(res);
         }
@@ -51,11 +55,13 @@ public class TaskController {
             errorResponse.put("errorMessage", e.getMessage());
             errorResponse.put("stackTrace", e.getStackTrace());
             return ResponseEntity.badRequest().body(errorResponse);
+        } catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateTask(@PathVariable long id, @RequestBody Task task) {
+    public ResponseEntity<?> updateTask(@PathVariable long id, @RequestBody TaskDto task) {
         task.setId(id);
         try{
             taskService.update(task);

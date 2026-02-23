@@ -1,11 +1,14 @@
 package ru.ssau.todo.service;
 
 import org.springframework.stereotype.Service;
+import ru.ssau.todo.dto.TaskDto;
+import ru.ssau.todo.dto.mapper.TaskMapper;
 import ru.ssau.todo.entity.Task;
 import ru.ssau.todo.entity.TaskStatus;
 import ru.ssau.todo.exception.BusinessLogicException;
 import ru.ssau.todo.exception.NotFoundException;
 import ru.ssau.todo.repository.TaskRepository;
+import ru.ssau.todo.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,43 +18,56 @@ import java.util.Optional;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final TaskMapper taskMapper;
+    private final UserRepository userRepository;
 
-    TaskService(TaskRepository taskRepository) {
+    TaskService(TaskRepository taskRepository, TaskMapper taskMapper, UserRepository userRepository) {
+        this.taskMapper = taskMapper;
         this.taskRepository = taskRepository;
+        this.userRepository = userRepository;
     }
 
-    public Task create(Task task) throws BusinessLogicException {
+    public TaskDto create(TaskDto task) throws BusinessLogicException, NotFoundException {
+        userRepository.findById(task.getCreatedBy()).orElseThrow(
+                () -> new NotFoundException("User not found")
+        );
         long activeCount = taskRepository.countActiveTasksByUserId(task.getCreatedBy());
         if ((task.getStatus().equals(TaskStatus.OPEN)
                 || task.getStatus().equals(TaskStatus.IN_PROGRESS))
                 && activeCount >= 10)
             throw new BusinessLogicException("Maximum 10 active tasks per user");
-        return taskRepository.create(task);
+        task.setCreatedAt(LocalDateTime.now());
+        return taskMapper.toDto(taskRepository.save(taskMapper.toEntity(task)));
     }
 
 
-    public Optional<Task> findById(long id) {
-        return taskRepository.findById(id);
+
+    public TaskDto findById(long id) throws NotFoundException {
+        Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task not found"));
+        return taskMapper.toDto(task);
     }
 
 
-    public List<Task> findAll(LocalDateTime from, LocalDateTime to, long userId) {
-        return taskRepository.findAll(from, to, userId);
+    public List<TaskDto> findAll(LocalDateTime from, LocalDateTime to, long userId) {
+        return taskMapper.toDto(taskRepository.findAll(from, to, userId));
     }
 
 
-    public void update(Task task) throws NotFoundException, BusinessLogicException
+    public void update(TaskDto task) throws NotFoundException, BusinessLogicException
     {
+        Task oldTask = taskRepository.findById(task.getId()).orElseThrow(
+                () -> new NotFoundException("Task not found")
+        );
         if (task.getStatus().equals(TaskStatus.OPEN) || task.getStatus().equals(TaskStatus.IN_PROGRESS)) {
-            Optional<Task> taskOptional = taskRepository.findById(task.getId());
-            if (taskOptional.isPresent()
-                    && (taskOptional.get().getStatus().equals(TaskStatus.CLOSED)
-                    || taskOptional.get().getStatus().equals(TaskStatus.DONE))
-                    && taskRepository.countActiveTasksByUserId(taskOptional.get().getCreatedBy()) >= 10) {
+            if ((oldTask.getStatus().equals(TaskStatus.CLOSED)
+                    || oldTask.getStatus().equals(TaskStatus.DONE))
+                    && taskRepository.countActiveTasksByUserId(task.getCreatedBy()) >= 10) {
                 throw new BusinessLogicException("Maximum 10 active tasks per user");
             }
         }
-        taskRepository.update(task);
+        oldTask.setStatus(task.getStatus());
+        oldTask.setTitle(task.getTitle());
+        taskRepository.save(oldTask);
     }
 
 
