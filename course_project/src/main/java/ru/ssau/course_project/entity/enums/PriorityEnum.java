@@ -1,6 +1,6 @@
 package ru.ssau.course_project.entity.enums;
 
-public enum Priority {
+public enum PriorityEnum {
     HIGH,
     MEDIUM,
     LOW

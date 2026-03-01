@@ -2,7 +2,7 @@ package ru.ssau.course_project.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import ru.ssau.course_project.entity.enums.Priority;
+import ru.ssau.course_project.entity.enums.PriorityEnum;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +20,7 @@ public class Task {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private Priority priority;
+    private PriorityEnum priority;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

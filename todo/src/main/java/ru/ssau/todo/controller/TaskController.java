@@ -4,7 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.ssau.todo.dto.TaskDto;
 import ru.ssau.todo.entity.Task;
-import ru.ssau.todo.exception.BusinessLogicException;
+import ru.ssau.todo.exception.ActiveTaskCountException;
+import ru.ssau.todo.exception.DeletedTimeException;
 import ru.ssau.todo.exception.NotFoundException;
 import ru.ssau.todo.service.TaskService;
 
@@ -50,7 +51,7 @@ public class TaskController {
             return ResponseEntity.created(URI.create("/tasks/" + res.getId()))
                     .body(res);
         }
-        catch (BusinessLogicException e) {
+        catch (ActiveTaskCountException e) {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("errorMessage", e.getMessage());
             errorResponse.put("stackTrace", e.getStackTrace());
@@ -69,7 +70,7 @@ public class TaskController {
         }
         catch (NotFoundException nfe) {
             return ResponseEntity.notFound().build();
-        } catch (BusinessLogicException e) {
+        } catch (ActiveTaskCountException e) {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("errorMessage", e.getMessage());
             errorResponse.put("stackTrace", e.getStackTrace());
@@ -83,7 +84,7 @@ public class TaskController {
             taskService.deleteById(id);
             return ResponseEntity.noContent().build();
         }
-        catch (BusinessLogicException e) {
+        catch (DeletedTimeException e) {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("errorMessage", e.getMessage());
             errorResponse.put("stackTrace", e.getStackTrace());

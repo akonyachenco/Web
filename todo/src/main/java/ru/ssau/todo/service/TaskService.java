@@ -5,7 +5,8 @@ import ru.ssau.todo.dto.TaskDto;
 import ru.ssau.todo.dto.mapper.TaskMapper;
 import ru.ssau.todo.entity.Task;
 import ru.ssau.todo.entity.TaskStatus;
-import ru.ssau.todo.exception.BusinessLogicException;
+import ru.ssau.todo.exception.ActiveTaskCountException;
+import ru.ssau.todo.exception.DeletedTimeException;
 import ru.ssau.todo.exception.NotFoundException;
 import ru.ssau.todo.repository.TaskRepository;
 import ru.ssau.todo.repository.UserRepository;
@@ -20,6 +21,8 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
     private final UserRepository userRepository;
+    private final short maxActiveTasks = 10;
+    private final short deletedTime = 5;
 
     TaskService(TaskRepository taskRepository, TaskMapper taskMapper, UserRepository userRepository) {
         this.taskMapper = taskMapper;
@@ -27,15 +30,14 @@ public class TaskService {
         this.userRepository = userRepository;
     }
 
-    public TaskDto create(TaskDto task) throws BusinessLogicException, NotFoundException {
+    public TaskDto create(TaskDto task) throws ActiveTaskCountException, NotFoundException {
         userRepository.findById(task.getCreatedBy()).orElseThrow(
                 () -> new NotFoundException("User not found")
         );
         long activeCount = taskRepository.countActiveTasksByUserId(task.getCreatedBy());
-        if ((task.getStatus().equals(TaskStatus.OPEN)
-                || task.getStatus().equals(TaskStatus.IN_PROGRESS))
-                && activeCount >= 10)
-            throw new BusinessLogicException("Maximum 10 active tasks per user");
+        if (task.isActive()
+                && activeCount >= maxActiveTasks)
+            throw new ActiveTaskCountException("Maximum " + maxActiveTasks + " active tasks per user");
         task.setCreatedAt(LocalDateTime.now());
         return taskMapper.toDto(taskRepository.save(taskMapper.toEntity(task)));
     }
@@ -53,16 +55,16 @@ public class TaskService {
     }
 
 
-    public void update(TaskDto task) throws NotFoundException, BusinessLogicException
+    public void update(TaskDto task) throws NotFoundException, ActiveTaskCountException
     {
         Task oldTask = taskRepository.findById(task.getId()).orElseThrow(
                 () -> new NotFoundException("Task not found")
         );
-        if (task.getStatus().equals(TaskStatus.OPEN) || task.getStatus().equals(TaskStatus.IN_PROGRESS)) {
+        if (task.isActive()) {
             if ((oldTask.getStatus().equals(TaskStatus.CLOSED)
                     || oldTask.getStatus().equals(TaskStatus.DONE))
-                    && taskRepository.countActiveTasksByUserId(task.getCreatedBy()) >= 10) {
-                throw new BusinessLogicException("Maximum 10 active tasks per user");
+                    && taskRepository.countActiveTasksByUserId(task.getCreatedBy()) >= maxActiveTasks) {
+                throw new ActiveTaskCountException("Maximum " + maxActiveTasks + " active tasks per user");
             }
         }
         oldTask.setStatus(task.getStatus());
@@ -71,11 +73,11 @@ public class TaskService {
     }
 
 
-    public void deleteById(long id) throws BusinessLogicException {
+    public void deleteById(long id) throws DeletedTimeException {
         Optional<Task> taskOptional = taskRepository.findById(id);
         if(taskOptional.isPresent()) {
-            if(taskOptional.get().getCreatedAt().isAfter(LocalDateTime.now().minusMinutes(5)))
-                throw new BusinessLogicException("Task was created less than 5 minutes ago");
+            if(taskOptional.get().getCreatedAt().isAfter(LocalDateTime.now().minusMinutes(deletedTime)))
+                throw new DeletedTimeException("Task was created less than " + deletedTime + " minutes ago");
         }
         taskRepository.deleteById(id);
     }

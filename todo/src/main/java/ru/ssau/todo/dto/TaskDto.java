@@ -12,4 +12,8 @@ public class TaskDto {
     private TaskStatus status;
     private Long createdBy;
     private LocalDateTime createdAt;
+
+    public boolean isActive() {
+        return status.equals(TaskStatus.OPEN) || status.equals(TaskStatus.IN_PROGRESS);
+    }
 }
