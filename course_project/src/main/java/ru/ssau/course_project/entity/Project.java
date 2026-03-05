@@ -17,6 +17,7 @@ public class Project {
 
     private String name;
 
+    @Column(columnDefinition = "text")
     private String description;
 
     private Long cost;

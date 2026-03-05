@@ -17,6 +17,7 @@ public class Task {
 
     private String title;
 
+    @Column(columnDefinition = "text")
     private String description;
 
     @Enumerated(EnumType.STRING)

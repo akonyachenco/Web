@@ -18,6 +18,7 @@ public class Sprint {
 
     private String name;
 
+    @Column(columnDefinition = "text")
     private String goal;
 
     @Column(name = "start_date")
