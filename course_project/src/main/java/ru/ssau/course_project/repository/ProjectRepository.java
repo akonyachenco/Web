@@ -2,6 +2,7 @@ package ru.ssau.course_project.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.ssau.course_project.entity.Project;
 
@@ -16,5 +17,5 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     List<Project> findAllByStartDateAfter(LocalDate startDate);
 
     @Query("SELECT p FROM Project p JOIN p.team e WHERE e.id = :id")
-    List<Project> findAllByEmployeeId(Long id);
+    List<Project> findAllByEmployeeId(@Param("id") Long id);
 }
