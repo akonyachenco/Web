@@ -1,5 +1,6 @@
 package ru.ssau.todo.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.ssau.todo.dto.TaskDto;
@@ -7,6 +8,7 @@ import ru.ssau.todo.entity.Task;
 import ru.ssau.todo.exception.ActiveTaskCountException;
 import ru.ssau.todo.exception.DeletedTimeException;
 import ru.ssau.todo.exception.NotFoundException;
+import ru.ssau.todo.service.CustomUserDetailsService;
 import ru.ssau.todo.service.TaskService;
 
 import java.net.URI;
@@ -16,14 +18,13 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/tasks")
 public class TaskController {
 
     private final TaskService taskService;
+    private final CustomUserDetailsService userDetailsService;
 
-    public TaskController(TaskService taskService) {
-        this.taskService = taskService;
-    }
 
     @GetMapping
     public ResponseEntity<List<TaskDto>> getTasks(@RequestParam(required = false) LocalDateTime from,
@@ -47,6 +48,7 @@ public class TaskController {
     @PostMapping
     public ResponseEntity<?> createTask(@RequestBody TaskDto task) {
         try {
+            task.setCreatedBy(userDetailsService.getCurrentUser().getId());
             TaskDto res = taskService.create(task);
             return ResponseEntity.created(URI.create("/tasks/" + res.getId()))
                     .body(res);
