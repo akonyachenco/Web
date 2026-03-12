@@ -1,7 +1,6 @@
 package ru.ssau.course_project.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import ru.ssau.course_project.entity.Role;
 import ru.ssau.course_project.entity.dto.RoleDto;
 
 import java.util.List;

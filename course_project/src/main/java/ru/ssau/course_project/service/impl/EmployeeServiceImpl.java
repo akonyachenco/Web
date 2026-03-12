@@ -24,11 +24,12 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-    private final RoleRepository roleRepository;
-    private final TaskRepository taskRepository;
+    //private final RoleRepository roleRepository;
+    //private final TaskRepository taskRepository;
     private final ProjectRepository projectRepository;
     private final EmployeeMapper employeeMapper;
 
+    //TODO Проверка логина на уникальность
     @Override
     public EmployeeDto create(RegistrationDto dto) throws IllegalArgumentException {
         if (dto == null) throw new IllegalArgumentException();
@@ -38,6 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeMapper.toDto(employeeRepository.save(employee));
     }
 
+    //TODO Проверка логина на уникальность
     @Override
     public EmployeeDto update(EmployeeDto dto) throws EntityNotFoundException {
         Employee employee = employeeRepository.findById(dto.getId())
@@ -124,14 +126,4 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .toList();
     }
 
-    @Override
-    public List<EmployeeDto> findAllByTasksId(Long id) throws EntityNotFoundException {
-        taskRepository.findById(id)
-                .orElseThrow(
-                        () -> new EntityNotFoundException("Задача с id = " + id + " не найдена")
-                );
-        return employeeRepository.findAllByTasksId(id).stream()
-                .map(employeeMapper::toDto)
-                .toList();
-    }
 }

@@ -124,6 +124,7 @@ public class TaskServiceImpl implements TaskService {
                 .toList();
     }
 
+    //TODO Добавить проверку 'start < end'
     @Override
     public List<TaskDto> findAllByCreatedAtBetween(LocalDateTime start, LocalDateTime end) {
         return taskRepository.findAllByCreatedAtBetween(start, end).stream()

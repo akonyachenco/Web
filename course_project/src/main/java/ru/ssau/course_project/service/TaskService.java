@@ -1,7 +1,6 @@
 package ru.ssau.course_project.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import ru.ssau.course_project.entity.Task;
 import ru.ssau.course_project.entity.dto.TaskDto;
 import ru.ssau.course_project.entity.enums.PriorityEnum;
 

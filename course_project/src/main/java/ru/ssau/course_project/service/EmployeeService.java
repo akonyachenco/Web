@@ -26,5 +26,4 @@ public interface EmployeeService {
 
     List<EmployeeDto> findByProjectsId(Long id) throws EntityNotFoundException;;
 
-    List<EmployeeDto> findAllByTasksId(Long id) throws EntityNotFoundException;;
 }

@@ -21,7 +21,7 @@ public class Employee {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "login")
+    @Column(name = "login", unique = true)
     private String login;
 
     @Column(name = "password")

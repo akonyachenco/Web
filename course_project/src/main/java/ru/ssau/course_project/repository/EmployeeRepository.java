@@ -20,5 +20,4 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     List<Employee> findByProjectsId(Long id);
 
-    List<Employee> findAllByTasksId(Long id);
 }
