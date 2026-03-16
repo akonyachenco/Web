@@ -3,6 +3,7 @@ package ru.ssau.course_project.controller;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.ssau.course_project.entity.dto.ProjectDto;
 import ru.ssau.course_project.service.ProjectService;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/project")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class ProjectController {
 
     private final ProjectService projectService;

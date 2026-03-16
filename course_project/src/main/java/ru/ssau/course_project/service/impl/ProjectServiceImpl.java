@@ -2,6 +2,8 @@ package ru.ssau.course_project.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.ssau.course_project.entity.Employee;
@@ -13,9 +15,12 @@ import ru.ssau.course_project.entity.dto.mapper.ProjectMapper;
 import ru.ssau.course_project.repository.EmployeeRepository;
 import ru.ssau.course_project.repository.ProjectRepository;
 import ru.ssau.course_project.repository.StatusRepository;
+import ru.ssau.course_project.security.AuthService;
 import ru.ssau.course_project.service.ProjectService;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -27,6 +32,7 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectMapper projectMapper;
     private final StatusRepository statusRepository;
     private final EmployeeRepository employeeRepository;
+    private final AuthService authService;
 
     @Override
     public ProjectDto create(ProjectDto dto) throws EntityNotFoundException, IllegalArgumentException {
@@ -122,5 +128,16 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.findAllByEmployeeId(id).stream()
                 .map(projectMapper::toDto)
                 .toList();
+    }
+
+    public List<ProjectDto> findMyProjects() {
+        EmployeeDto employeeDto = authService.getCurrentUser();
+
+        if (employeeDto != null)
+            return projectRepository.findAllByEmployeeId(employeeDto.getId()).stream()
+                .map(projectMapper::toDto)
+                .toList();
+
+        return List.of();
     }
 }

@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-    Optional<Employee> findByLogin(String login);
+    Optional<Employee> findByUsername(String username);
 
     List<Employee> findAllByFirstNameContainingIgnoreCase(String firstName);
 

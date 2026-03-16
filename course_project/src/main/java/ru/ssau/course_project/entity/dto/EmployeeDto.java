@@ -10,10 +10,9 @@ public class EmployeeDto {
     private Long id;
     private String firstName;
     private String lastName;
-    @NotBlank(message = "Логин обязателен")
-    private String login;
+    private String username;
     private String position;
-    private List<RoleDto> roles;
+    private List<String> roles;
     private List<ProjectDto> projects;
     private List<TaskDto> tasks;
 

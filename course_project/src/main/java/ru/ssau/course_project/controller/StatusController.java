@@ -3,6 +3,7 @@ package ru.ssau.course_project.controller;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.ssau.course_project.entity.dto.StatusDto;
 import ru.ssau.course_project.service.StatusService;
@@ -10,6 +11,7 @@ import ru.ssau.course_project.service.StatusService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/status")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class StatusController {
 
     private final StatusService statusService;

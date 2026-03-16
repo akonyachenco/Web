@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import ru.ssau.course_project.entity.dto.TaskDto;
 import ru.ssau.course_project.entity.enums.PriorityEnum;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface TaskService {
 
     List<TaskDto> findAllByPriority(PriorityEnum priority);
 
-    List<TaskDto> findAllByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
+    List<TaskDto> findAllByCreatedAtBetween(LocalDateTime start, LocalDateTime end) throws DateTimeException;
 
     List<TaskDto> findAllByCreatedAtBefore(LocalDateTime time);
 
@@ -38,4 +39,15 @@ public interface TaskService {
     List<TaskDto> findAllBySprint_IdAndStatus_Name(Long id, String statusName) throws EntityNotFoundException;
 
     List<TaskDto> findAllByEmployee_IdAndSprint_Id(Long id, Long sprintId) throws EntityNotFoundException;
+
+    List<TaskDto> findAllByEmployeeIdAndProjectId(Long id, Long projectId) throws EntityNotFoundException;
+
+    List<TaskDto> findMyTasks();
+
+    List<TaskDto> findMyTasksByStatus(String statusName);
+
+    List<TaskDto> findMyTasksBySprintId(Long sprintId) throws EntityNotFoundException;
+
+    List<TaskDto> findMyTasksByProjectId(Long projectId) throws EntityNotFoundException;
+
 }

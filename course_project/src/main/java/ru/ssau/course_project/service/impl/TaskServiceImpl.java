@@ -8,15 +8,15 @@ import ru.ssau.course_project.entity.Employee;
 import ru.ssau.course_project.entity.Sprint;
 import ru.ssau.course_project.entity.Status;
 import ru.ssau.course_project.entity.Task;
+import ru.ssau.course_project.entity.dto.EmployeeDto;
 import ru.ssau.course_project.entity.dto.TaskDto;
 import ru.ssau.course_project.entity.dto.mapper.TaskMapper;
 import ru.ssau.course_project.entity.enums.PriorityEnum;
-import ru.ssau.course_project.repository.EmployeeRepository;
-import ru.ssau.course_project.repository.SprintRepository;
-import ru.ssau.course_project.repository.StatusRepository;
-import ru.ssau.course_project.repository.TaskRepository;
+import ru.ssau.course_project.repository.*;
+import ru.ssau.course_project.security.AuthService;
 import ru.ssau.course_project.service.TaskService;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,6 +30,8 @@ public class TaskServiceImpl implements TaskService {
     private final StatusRepository statusRepository;
     private final EmployeeRepository employeeRepository;
     private final SprintRepository sprintRepository;
+    private final ProjectRepository projectRepository;
+    private final AuthService authService;
 
     @Override
     public TaskDto create(TaskDto dto) throws EntityNotFoundException, IllegalArgumentException {
@@ -124,9 +126,12 @@ public class TaskServiceImpl implements TaskService {
                 .toList();
     }
 
-    //TODO Добавить проверку 'start < end'
     @Override
-    public List<TaskDto> findAllByCreatedAtBetween(LocalDateTime start, LocalDateTime end) {
+    public List<TaskDto> findAllByCreatedAtBetween(LocalDateTime start, LocalDateTime end) throws DateTimeException {
+
+        if (start.isAfter(end))
+            throw new DateTimeException("Левая граница не может быть больше правой");
+
         return taskRepository.findAllByCreatedAtBetween(start, end).stream()
                 .map(taskMapper::toDto)
                 .toList();
@@ -195,13 +200,68 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDto> findAllByEmployee_IdAndSprint_Id(Long id, Long sprintId) throws EntityNotFoundException {
-        sprintRepository.findById(id)
+        sprintRepository.findById(sprintId)
                 .orElseThrow(() -> new EntityNotFoundException("Спринт с id = " + sprintId + " не найден"));
 
         employeeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Сотрудник с id = " + id + " не найден"));
 
         return taskRepository.findAllByEmployee_IdAndSprint_Id(id, sprintId).stream()
+                .map(taskMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<TaskDto> findAllByEmployeeIdAndProjectId(Long id, Long projectId) throws EntityNotFoundException {
+        employeeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Сотрудник с id = " + id + " не найден"));
+
+        projectRepository.findById(projectId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Проект с id = %d не найден", projectId)));
+
+        return taskRepository.findAllByEmployee_IdAndSprint_Project_Id(id, projectId).stream()
+                .map(taskMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<TaskDto> findMyTasks() {
+        EmployeeDto employeeDto = authService.getCurrentUser();
+
+        return taskRepository.findAllByEmployee_Id(employeeDto.getId()).stream()
+                .map(taskMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<TaskDto> findMyTasksByStatus(String statusName) {
+        EmployeeDto employeeDto = authService.getCurrentUser();
+
+        return taskRepository.findAllByEmployee_IdAndStatus_Name(employeeDto.getId(), statusName).stream()
+                .map(taskMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<TaskDto> findMyTasksBySprintId(Long sprintId) throws EntityNotFoundException {
+        sprintRepository.findById(sprintId)
+                .orElseThrow(() -> new EntityNotFoundException("Спринт с id = " + sprintId + " не найден"));
+
+        EmployeeDto employeeDto = authService.getCurrentUser();
+
+        return taskRepository.findAllByEmployee_IdAndSprint_Id(employeeDto.getId(), sprintId).stream()
+                .map(taskMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<TaskDto> findMyTasksByProjectId(Long projectId) throws EntityNotFoundException {
+        projectRepository.findById(projectId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Проект с id = %d не найден", projectId)));
+
+        EmployeeDto employeeDto = authService.getCurrentUser();
+
+        return taskRepository.findAllByEmployee_IdAndSprint_Project_Id(employeeDto.getId(), projectId).stream()
                 .map(taskMapper::toDto)
                 .toList();
     }

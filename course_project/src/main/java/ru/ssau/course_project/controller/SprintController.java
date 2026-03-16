@@ -3,6 +3,7 @@ package ru.ssau.course_project.controller;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.ssau.course_project.entity.dto.SprintDto;
 import ru.ssau.course_project.service.SprintService;
@@ -14,6 +15,7 @@ public class SprintController {
 
     private final SprintService sprintService;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<?> create(@RequestBody SprintDto sprintDto) {
         try {
@@ -24,6 +26,7 @@ public class SprintController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping
     public ResponseEntity<?> update(@RequestBody SprintDto sprintDto) {
         try {
@@ -34,12 +37,14 @@ public class SprintController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable long id) {
         sprintService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable long id) {
         try {
@@ -50,6 +55,7 @@ public class SprintController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/all")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(sprintService.findAll());

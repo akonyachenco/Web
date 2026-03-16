@@ -1,6 +1,7 @@
 package ru.ssau.course_project.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -21,8 +22,8 @@ public class Employee {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "login", unique = true)
-    private String login;
+    @Column(name = "username", unique = true)
+    private String username;
 
     @Column(name = "password")
     private String password;

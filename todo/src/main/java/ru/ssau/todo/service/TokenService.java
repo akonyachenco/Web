@@ -2,8 +2,6 @@ package ru.ssau.todo.service;
 
 import org.springframework.stereotype.Service;
 import ru.ssau.todo.dto.UserDto;
-import ru.ssau.todo.entity.Role;
-import ru.ssau.todo.entity.User;
 import ru.ssau.todo.exception.ExpiredTokenException;
 import ru.ssau.todo.exception.InvalidTokenFormatException;
 import ru.ssau.todo.exception.InvalidTokenSignatureException;

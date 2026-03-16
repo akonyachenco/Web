@@ -30,4 +30,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findAllBySprint_IdAndStatus_Name(Long id, String statusName);
 
     List<Task> findAllByEmployee_IdAndSprint_Id(Long id, Long sprintId);
+
+    List<Task> findAllByEmployee_IdAndSprint_Project_Id(Long id, Long sprintProjectId);
 }

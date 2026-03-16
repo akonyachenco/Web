@@ -3,6 +3,7 @@ package ru.ssau.course_project.controller;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.ssau.course_project.entity.dto.RoleDto;
 import ru.ssau.course_project.service.RoleService;
@@ -10,6 +11,7 @@ import ru.ssau.course_project.service.RoleService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/role")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class RoleController {
 
     private final RoleService roleService;

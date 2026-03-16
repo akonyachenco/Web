@@ -2,7 +2,6 @@ package ru.ssau.course_project.entity.dto;
 
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data

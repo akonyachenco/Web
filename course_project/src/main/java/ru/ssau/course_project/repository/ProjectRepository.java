@@ -18,4 +18,5 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Query("SELECT p FROM Project p JOIN p.team e WHERE e.id = :id")
     List<Project> findAllByEmployeeId(@Param("id") Long id);
+
 }

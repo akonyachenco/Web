@@ -26,4 +26,6 @@ public interface ProjectService {
 
     List<ProjectDto> findAllByEmployeeId(Long id) throws EntityNotFoundException;
 
+    List<ProjectDto> findMyProjects();
+
 }

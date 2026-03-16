@@ -2,21 +2,21 @@ package ru.ssau.course_project.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.ssau.course_project.entity.Employee;
 import ru.ssau.course_project.entity.Role;
 import ru.ssau.course_project.entity.dto.EmployeeDto;
-import ru.ssau.course_project.entity.dto.RegistrationDto;
-import ru.ssau.course_project.entity.dto.RoleDto;
+
 import ru.ssau.course_project.entity.dto.mapper.EmployeeMapper;
 import ru.ssau.course_project.repository.EmployeeRepository;
 import ru.ssau.course_project.repository.ProjectRepository;
 import ru.ssau.course_project.repository.RoleRepository;
-import ru.ssau.course_project.repository.TaskRepository;
 import ru.ssau.course_project.service.EmployeeService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,48 +24,49 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-    //private final RoleRepository roleRepository;
-    //private final TaskRepository taskRepository;
+    private final RoleRepository roleRepository;
     private final ProjectRepository projectRepository;
     private final EmployeeMapper employeeMapper;
 
-    //TODO Проверка логина на уникальность
+
+
     @Override
-    public EmployeeDto create(RegistrationDto dto) throws IllegalArgumentException {
-        if (dto == null) throw new IllegalArgumentException();
-
-        Employee employee = employeeMapper.toEntity(dto);
-
-        return employeeMapper.toDto(employeeRepository.save(employee));
-    }
-
-    //TODO Проверка логина на уникальность
-    @Override
-    public EmployeeDto update(EmployeeDto dto) throws EntityNotFoundException {
+    public EmployeeDto update(EmployeeDto dto) throws EntityNotFoundException, DuplicateKeyException {
         Employee employee = employeeRepository.findById(dto.getId())
                 .orElseThrow(
-                        () -> new EntityNotFoundException("Сотрудник с id = " + dto.getId() + " не найден")
-                );
+                        () -> new EntityNotFoundException("Сотрудник с id = " + dto.getId() + " не найден"));
 
         if (dto.getFirstName() != null)
             employee.setFirstName(dto.getFirstName());
         if (dto.getLastName() != null)
             employee.setLastName(dto.getLastName());
-        if (dto.getLogin() != null)
-            employee.setLogin(dto.getLogin());
+
+        if (dto.getUsername() != null) {
+            if (employeeRepository.findByUsername(dto.getUsername()).isPresent()) {
+                throw new DuplicateKeyException("Имя пользователя занято");
+            }
+            employee.setUsername(dto.getUsername());
+        }
         if (dto.getPosition() != null)
             employee.setPosition(dto.getPosition());
 
-//        if (dto.getRoles() != null) {
-//            List<Short> ids = dto.getRoles().stream()
-//                    .map(RoleDto::getId)
-//                    .toList();
-//
-//            List<Role> roles = roleRepository.findAllById(ids);
-//
-//            employee.getRoles().clear();
-//            employee.getRoles().addAll(roles);
-//        }
+
+        return employeeMapper.toDto(employeeRepository.save(employee));
+    }
+
+    @Override
+    public EmployeeDto updateRoles(Long id, List<String> roles) throws EntityNotFoundException {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Сотрудник с id = " + id + " не найден"));
+
+        List<Role> roleList = roles.stream()
+                .map(roleRepository::findByName)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
+
+        employee.setRoles(roleList);
 
         return employeeMapper.toDto(employeeRepository.save(employee));
     }
@@ -92,11 +93,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDto findByLogin(String login) throws EntityNotFoundException {
+    public EmployeeDto findByUsername(String username) throws EntityNotFoundException {
         return employeeMapper.toDto(
-                employeeRepository.findByLogin(login)
+                employeeRepository.findByUsername(username)
                 .orElseThrow(
-                        () -> new EntityNotFoundException("Сотрудник с login = " + login + " не найден")
+                        () -> new EntityNotFoundException("Сотрудник " + username + " не найден")
                 )
         );
     }
@@ -125,5 +126,6 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .map(employeeMapper::toDto)
                 .toList();
     }
+
 
 }
