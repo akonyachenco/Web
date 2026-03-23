@@ -1,0 +1,22 @@
+<div>
+
+  <button routerLink="/tasks/new">
+    Добавить задачу
+  </button>
+
+  @if (errorMessage) {
+    <div class="error">
+      {{errorMessage}}
+    </div>
+  }
+
+  @for (task of tasks; track task.id) {
+    <app-task-item
+      [isDeleteDisabled]="!isAdmin"
+      [task]="task"
+      (deleteTask)="deleteTaskHandler($event)"
+    >
+    </app-task-item>
+  }
+
+</div>

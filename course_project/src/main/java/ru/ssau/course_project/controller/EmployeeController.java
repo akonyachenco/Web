@@ -92,7 +92,23 @@ public class EmployeeController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/all/project/{id}")
     public ResponseEntity<?> findByProjectId(@PathVariable long id) {
-        return ResponseEntity.ok(employeeService.findByProjectsId(id));
+        try {
+            return ResponseEntity.ok(employeeService.findByProjectsId(id));
+        }
+        catch (EntityNotFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/all/not-in-project/{id}")
+    public ResponseEntity<?> findEmployeesNotInProject(@PathVariable long id) {
+        try {
+            return ResponseEntity.ok(employeeService.findEmployeesNotInProject(id));
+        }
+        catch (EntityNotFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
 }

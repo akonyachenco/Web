@@ -1,21 +1,18 @@
-package ru.ssau.course_project.entity.dto.mapper;
+    package ru.ssau.course_project.entity.dto.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import ru.ssau.course_project.entity.Status;
-import ru.ssau.course_project.entity.dto.StatusDto;
+    import org.mapstruct.Mapper;
+    import org.mapstruct.Mapping;
+    import ru.ssau.course_project.entity.Status;
+    import ru.ssau.course_project.entity.dto.StatusDto;
 
-@Mapper(componentModel = "spring",
-        uses = {ProjectMapper.class,
-                SprintMapper.class,
-                TaskMapper.class})
-public interface StatusMapper {
+    @Mapper(componentModel = "spring")
+    public interface StatusMapper {
 
-    StatusDto toDto(Status entity);
+        StatusDto toDto(Status entity);
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "projects", ignore = true)
-    @Mapping(target = "sprints", ignore = true)
-    @Mapping(target = "tasks", ignore = true)
-    Status toEntity(StatusDto dto);
-}
+        @Mapping(target = "id", ignore = true)
+        @Mapping(target = "projects", ignore = true)
+        @Mapping(target = "sprints", ignore = true)
+        @Mapping(target = "tasks", ignore = true)
+        Status toEntity(StatusDto dto);
+    }

@@ -6,6 +6,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.ssau.course_project.entity.Employee;
+import ru.ssau.course_project.entity.Project;
 import ru.ssau.course_project.entity.Role;
 import ru.ssau.course_project.entity.dto.EmployeeDto;
 
@@ -127,5 +128,14 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .toList();
     }
 
+    @Override
+    public List<EmployeeDto> findEmployeesNotInProject(Long projectId) throws EntityNotFoundException {
+        projectRepository.findById(projectId).orElseThrow(
+                () -> new EntityNotFoundException("Проект с id = " + projectId + " не найден"));
+
+        return employeeRepository.findEmployeesNotInProject(projectId).stream()
+                .map(employeeMapper::toDto)
+                .toList();
+    }
 
 }

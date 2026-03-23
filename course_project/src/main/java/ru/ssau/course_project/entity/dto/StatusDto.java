@@ -8,7 +8,7 @@ import java.util.List;
 public class StatusDto {
     private Short id;
     private String name;
-    private List<ProjectDto> projects;
-    private List<SprintDto> sprints;
-    private List<TaskDto> tasks;
+//    private List<ProjectDto> projects;
+//    private List<SprintDto> sprints;
+//    private List<TaskDto> tasks;
 }

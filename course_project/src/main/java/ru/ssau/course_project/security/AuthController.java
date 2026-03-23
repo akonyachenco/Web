@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.web.bind.annotation.*;
 import ru.ssau.course_project.entity.dto.LoginDto;
 import ru.ssau.course_project.entity.dto.RegistrationDto;
@@ -44,5 +45,16 @@ public class AuthController {
         catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser() {
+        try {
+            return ResponseEntity.ok(authService.getCurrentUser());
+        }
+        catch (AuthenticationServiceException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+
     }
 }

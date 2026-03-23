@@ -1,0 +1,23 @@
+<div>
+
+  <h2> {{task.title}} </h2>
+
+  <span>
+    Статус:
+    <div class="status-indicator" [class]="getStatusColor(task.status)"></div>
+    {{task.status}}
+  </span>
+
+  <em style="display: block">
+    Дата создания: {{task.createdAt | date: 'dd MMMM yyyy | HH:mm'}}
+  </em>
+
+  <button [routerLink]="['/tasks', task.id]">
+    Редактировать
+  </button>
+
+  <button [hidden]="isDeleteDisabled" (click)="onDelete()">
+    Удалить
+  </button>
+
+</div>

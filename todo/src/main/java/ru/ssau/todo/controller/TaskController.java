@@ -28,10 +28,10 @@ public class TaskController {
 
     @GetMapping
     public ResponseEntity<List<TaskDto>> getTasks(@RequestParam(required = false) LocalDateTime from,
-                                                  @RequestParam(required = false) LocalDateTime to,
-                                                  @RequestParam long userId) {
+                                                  @RequestParam(required = false) LocalDateTime to) {
         if(from == null) from = LocalDateTime.now().minusDays(10000);
         if(to == null) to = LocalDateTime.now().plusDays(1);
+        long userId = userDetailsService.getCurrentUser().getId();
         return ResponseEntity.ok(taskService.findAll(from, to, userId));
     }
 

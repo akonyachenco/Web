@@ -16,6 +16,6 @@ public class UserProjectController {
 
     @GetMapping
     public ResponseEntity<?> findMyProjects() {
-        return ResponseEntity.ok(projectService.findAll());
+        return ResponseEntity.ok(projectService.findMyProjects());
     }
 }

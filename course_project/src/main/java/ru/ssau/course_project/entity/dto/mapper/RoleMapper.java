@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 import ru.ssau.course_project.entity.Role;
 import ru.ssau.course_project.entity.dto.RoleDto;
 
-@Mapper(componentModel = "spring", uses = EmployeeMapper.class)
+@Mapper(componentModel = "spring")
 public interface RoleMapper {
 
     RoleDto toDto(Role entity);

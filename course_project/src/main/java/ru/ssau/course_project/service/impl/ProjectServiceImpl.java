@@ -71,16 +71,6 @@ public class ProjectServiceImpl implements ProjectService {
             project.setStartDate(dto.getStartDate());
         if (dto.getDeadline() != null)
             project.setDeadline(dto.getDeadline());
-        if (dto.getTeam() != null) {
-            List<Long> ids = dto.getTeam().stream()
-                    .map(EmployeeDto::getId)
-                    .toList();
-
-            List<Employee> employees = employeeRepository.findAllById(ids);
-
-            project.getTeam().clear();
-            project.getTeam().addAll(employees);
-        }
 
         return projectMapper.toDto(projectRepository.save(project));
     }
@@ -139,5 +129,29 @@ public class ProjectServiceImpl implements ProjectService {
                 .toList();
 
         return List.of();
+    }
+
+    @Override
+    public void addToTeam(Long projectId, List<Long> employeeIds) throws EntityNotFoundException {
+        Project project = projectRepository.findById(projectId).orElseThrow(
+                () -> new EntityNotFoundException("Проект с id = " + projectId + " не найден"));
+
+        List<Employee> employees = employeeRepository.findAllById(employeeIds);
+
+        project.getTeam().addAll(employees);
+
+        projectRepository.save(project);
+    }
+
+    @Override
+    public void removeFromTeam(Long projectId, Long employeeId) throws EntityNotFoundException {
+        Project project = projectRepository.findById(projectId).orElseThrow(
+                () -> new EntityNotFoundException("Проект с id = " + projectId + " не найден"));
+
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(
+                () -> new EntityNotFoundException("Сотрудник с id = " + employeeId + " не найден"));
+
+        project.getTeam().remove(employee);
+
     }
 }

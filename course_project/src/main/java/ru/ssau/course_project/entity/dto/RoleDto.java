@@ -8,5 +8,5 @@ import java.util.List;
 public class RoleDto {
     private Short id;
     private String name;
-    private List<EmployeeDto> employees;
+//    private List<EmployeeDto> employees;
 }

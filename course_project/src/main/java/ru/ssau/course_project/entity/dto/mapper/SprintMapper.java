@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 import ru.ssau.course_project.entity.Sprint;
 import ru.ssau.course_project.entity.dto.SprintDto;
 
-@Mapper(componentModel = "spring", uses = TaskMapper.class)
+@Mapper(componentModel = "spring")
 public interface SprintMapper {
 
     @Mapping(target = "statusId", source = "status.id")

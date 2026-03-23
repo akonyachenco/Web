@@ -20,4 +20,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     List<Employee> findByProjectsId(Long id);
 
+    @Query("SELECT e FROM Employee e WHERE NOT EXISTS " +
+            "(SELECT emp FROM Project p join p.team emp WHERE p.id = :projectId AND emp.id = e.id)")
+    List<Employee> findEmployeesNotInProject(Long projectId);
+
+
 }

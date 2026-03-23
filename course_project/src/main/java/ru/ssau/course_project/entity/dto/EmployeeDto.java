@@ -13,7 +13,7 @@ public class EmployeeDto {
     private String username;
     private String position;
     private List<String> roles;
-    private List<ProjectDto> projects;
-    private List<TaskDto> tasks;
+//    private List<ProjectDto> projects;
+//    private List<TaskDto> tasks;
 
 }

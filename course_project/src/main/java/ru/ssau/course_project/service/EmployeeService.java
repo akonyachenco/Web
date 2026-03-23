@@ -28,4 +28,6 @@ public interface EmployeeService {
 
     EmployeeDto updateRoles(Long id, List<String> roles) throws EntityNotFoundException;
 
+    List<EmployeeDto> findEmployeesNotInProject(Long projectId) throws EntityNotFoundException;
+
 }

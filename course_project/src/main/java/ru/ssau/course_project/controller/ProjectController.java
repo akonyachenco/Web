@@ -2,6 +2,7 @@ package ru.ssau.course_project.controller;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import ru.ssau.course_project.entity.dto.ProjectDto;
 import ru.ssau.course_project.service.ProjectService;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -78,4 +80,27 @@ public class ProjectController {
             return ResponseEntity.status(404).body(e.getMessage());
         }
     }
+
+    @PostMapping("/{id}/add-to-team")
+    public ResponseEntity<?> addToTeam(@PathVariable long id, @RequestBody List<Long> employeeIds) {
+        try {
+            projectService.addToTeam(id, employeeIds);
+            return ResponseEntity.ok().build();
+        }
+        catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/{id}/delete-from-team/{employeeId}")
+    public ResponseEntity<?> deleteFromTeam(@PathVariable long id, @PathVariable long employeeId) {
+        try {
+            projectService.removeFromTeam(id, employeeId);
+            return ResponseEntity.ok().build();
+        }
+        catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
 }

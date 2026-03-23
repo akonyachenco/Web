@@ -28,4 +28,7 @@ public interface ProjectService {
 
     List<ProjectDto> findMyProjects();
 
+    void addToTeam(Long projectId, List<Long> employeeIds) throws EntityNotFoundException;
+    void removeFromTeam(Long projectId, Long employeeId) throws EntityNotFoundException;
+
 }

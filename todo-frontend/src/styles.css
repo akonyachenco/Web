@@ -1,0 +1,314 @@
+/* Глобальные стили для тёмной темы */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #e4e6eb;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 60px 30px;
+  display: block;
+  justify-content: center;
+}
+
+/* Контейнер для основного содержимого */
+:host {
+  display: block;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* Обертка для всех компонентов */
+div, router-outlet + * {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Кнопки */
+button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Стили для ссылок-кнопок */
+a, [routerLink] {
+  text-decoration: none;
+}
+
+/* Формы */
+form {
+  background: rgba(30, 30, 46, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 32px;
+  margin: 24px 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+}
+
+label {
+  display: block;
+  margin-bottom: 20px;
+  font-weight: 500;
+  color: #cbd5e0;
+  font-size: 15px;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 8px;
+  background: rgba(15, 25, 35, 0.9);
+  border: 2px solid #2d3748;
+  border-radius: 10px;
+  color: #e4e6eb;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  background: rgba(20, 30, 40, 0.9);
+}
+
+input::placeholder {
+  color: #718096;
+}
+
+/* Стили для элементов задач */
+app-task-item {
+  display: block;
+  background: linear-gradient(135deg, rgba(30, 30, 46, 0.9) 0%, rgba(20, 20, 34, 0.9) 100%);
+  backdrop-filter: blur(5px);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin: 16px 0;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+app-task-item:hover {
+  transform: translateX(5px);
+  border-color: rgba(102, 126, 234, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Заголовки */
+h2 {
+  color: #fff;
+  margin-bottom: 14px;
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #fff 0%, #a0aec0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Индикаторы статуса */
+.status-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin: 0 8px;
+  vertical-align: middle;
+  box-shadow: 0 0 5px currentColor;
+}
+
+.status-indicator.closed {
+  background-color: #f56565;
+  box-shadow: 0 0 8px #f56565;
+}
+
+.status-indicator.in-progress {
+  background-color: #fbbf24;
+  box-shadow: 0 0 8px #fbbf24;
+}
+
+.status-indicator.done {
+  background-color: #9b59b6;
+  box-shadow: 0 0 8px #9b59b6;
+}
+
+.status-indicator.open {
+  background-color: #48bb78;
+  box-shadow: 0 0 8px #48bb78;
+}
+
+/* Ошибки */
+.error {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: white;
+  padding: 12px 18px;
+  border-radius: 10px;
+  margin: 16px 0;
+  font-size: 14px;
+  border-left: 4px solid #ff6b6b;
+  animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Стили для блока с датой */
+em {
+  color: #a0aec0;
+  font-style: normal;
+  font-size: 12px;
+  margin: 10px 0;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  display: inline-block !important;
+}
+
+/* Стили для статуса в тексте */
+span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0;
+  color: #cbd5e0;
+  font-size: 14px;
+}
+
+/* Кнопка "Назад" */
+button[routerLink="/tasks"] {
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+  margin-bottom: 20px;
+  padding: 10px 20px;
+}
+
+button[routerLink="/tasks"]:hover {
+  background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+}
+
+/* Кнопка удаления */
+button[hidden] {
+  display: none;
+}
+
+button:not([hidden]) + button {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+}
+
+button:not([hidden]) + button:hover {
+  background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+}
+
+
+select {
+  cursor: pointer;
+  appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+}
+
+/* Кастомный скроллбар */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a2e;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+/* Стили для router-outlet контейнера */
+router-outlet + * {
+  animation: fadeIn 0.5s ease;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Дополнительный стиль для контейнера задач */
+div:has(> app-task-item) {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+
+.login-link {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  display: inline-block;
+  z-index: 1000;
+}
+
+
+
+

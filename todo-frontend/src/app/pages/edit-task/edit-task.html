@@ -1,0 +1,58 @@
+<div>
+
+  <button routerLink="/tasks">Назад</button>
+
+  @if (errorMessage) {
+    <div class="error">
+      {{errorMessage}}
+    </div>
+  }
+
+  <form
+    #editTaskForm="ngForm"
+    (ngSubmit)="onSubmit(editTaskForm)"
+  >
+
+    <label>
+      Заголовок
+      <input
+        type="text"
+        name="title"
+        [(ngModel)]="task.title"
+        #title="ngModel"
+        placeholder="Введите заголовок"
+        required
+      >
+    </label>
+
+    @if (title.invalid && title.touched) {
+      <div class="error">Заголовок обязателен</div>
+    }
+
+    <label>
+      Статус
+      <div class="status-indicator" [class]="getStatusColor(task.status)" ></div>
+      <select
+        name="status"
+        [(ngModel)]="task.status"
+        #status="ngModel"
+      >
+        @for (status of statuses; track status) {
+          <option [value]="status">
+            {{status}}
+          </option>
+        }
+      </select>
+    </label>
+
+    <button type="submit">
+      @if (id) {
+        Обновить
+      }
+      @else {
+        Добавить
+      }
+    </button>
+  </form>
+
+</div>

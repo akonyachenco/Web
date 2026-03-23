@@ -5,9 +5,7 @@ import org.mapstruct.Mapping;
 import ru.ssau.course_project.entity.Project;
 import ru.ssau.course_project.entity.dto.ProjectDto;
 
-@Mapper(componentModel = "spring",
-        uses = {EmployeeMapper.class,
-                SprintMapper.class})
+@Mapper(componentModel = "spring")
 public interface ProjectMapper {
 
     @Mapping(target = "statusId", source = "status.id")

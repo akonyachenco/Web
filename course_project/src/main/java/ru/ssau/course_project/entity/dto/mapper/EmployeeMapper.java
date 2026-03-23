@@ -9,10 +9,7 @@ import ru.ssau.course_project.entity.Role;
 import ru.ssau.course_project.entity.dto.EmployeeDto;
 import ru.ssau.course_project.entity.dto.RegistrationDto;
 
-@Mapper(componentModel = "spring",
-        uses = {RoleMapper.class,
-                ProjectMapper.class,
-                TaskMapper.class})
+@Mapper(componentModel = "spring")
 public interface EmployeeMapper {
 
     @Mapping(target = "roles", ignore = true)

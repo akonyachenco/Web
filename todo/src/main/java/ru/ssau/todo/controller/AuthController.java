@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import ru.ssau.todo.dto.TokenResponseDto;
 import ru.ssau.todo.dto.UserDto;
 import ru.ssau.todo.dto.UserRequestDto;
 import ru.ssau.todo.dto.UserResponseDto;
@@ -66,11 +67,11 @@ public class AuthController {
             String accessToken = tokenService.generateAccessToken(user);
             String refreshToken = tokenService.generateRefreshToken(user);
 
-            Map<String, String> response = new HashMap<>();
-            response.put("access_token", accessToken);
-            response.put("refresh_token", refreshToken);
+            TokenResponseDto tokenResponseDto = new TokenResponseDto();
+            tokenResponseDto.setAccessToken(accessToken);
+            tokenResponseDto.setRefreshToken(refreshToken);
 
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(tokenResponseDto);
         }
         catch (NotFoundException e) {
             return ResponseEntity.status(404).body(e.getMessage());
@@ -81,7 +82,7 @@ public class AuthController {
     public ResponseEntity<?> refreshToken(@RequestBody Map<String, String> body) {
 
         try {
-            String refreshToken = body.get("refresh_token");
+            String refreshToken = body.get("refreshToken");
             if (refreshToken != null) {
                 Map<String, Object> payload = tokenService.validateToken(refreshToken);
 
@@ -91,11 +92,11 @@ public class AuthController {
 
                 String accessToken = tokenService.generateAccessToken(user);
 
-                Map<String, String> response = new HashMap<>();
-                response.put("access_token", accessToken);
-                response.put("refresh_token", refreshToken);
+                TokenResponseDto tokenResponseDto = new TokenResponseDto();
+                tokenResponseDto.setAccessToken(accessToken);
+                tokenResponseDto.setRefreshToken(refreshToken);
 
-                return ResponseEntity.ok(response);
+                return ResponseEntity.ok(tokenResponseDto);
             }
             return ResponseEntity.status(401).body("Invalid refresh token");
 

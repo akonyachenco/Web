@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -101,12 +102,12 @@ public class AuthService {
         return null;
     }
 
-    public EmployeeDto getCurrentUser() {
+    public EmployeeDto getCurrentUser() throws AuthenticationServiceException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null) {
             return employeeService.findByUsername(authentication.getName());
         }
-        return null;
+        throw new AuthenticationServiceException("Вы не авторизованы");
     }
 }

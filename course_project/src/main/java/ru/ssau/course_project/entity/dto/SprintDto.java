@@ -17,5 +17,5 @@ public class SprintDto {
     private Short statusId;
     @NotNull(message = "Проект обязателен")
     private Long projectId;
-    private List<TaskDto> tasks;
+//    private List<TaskDto> tasks;
 }

@@ -18,6 +18,6 @@ public class ProjectDto {
     private LocalDate deadline;
     @NotNull(message = "Статус обязателен")
     private Short statusId;
-    private List<EmployeeDto> team;
-    private List<SprintDto> sprints;
+//    private List<EmployeeDto> team;
+//    private List<SprintDto> sprints;
 }

@@ -1,0 +1,28 @@
+<div>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+  >
+    <label>
+      Имя пользователя
+      <input
+        formControlName="username"
+        type="text" placeholder="Введите имя пользователя"
+      >
+    </label>
+
+    <label>
+      Пароль
+      <input
+        formControlName="password"
+        type="password" placeholder="Введите пароль"
+      >
+    </label>
+
+    @if (errorMessage) {
+      <div class="error"> {{errorMessage}}</div>
+    }
+
+    <button type="submit">Войти</button>
+  </form>
+</div>
