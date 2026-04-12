@@ -1,0 +1,176 @@
+:host {
+  --status-bg: rgba(20, 24, 50, 0.7);
+  --neon-blue: #00f3ff;
+  --neon-purple: #bc13fe;
+  --neon-green: #0aff60;
+  --neon-red: #ff2a6d;
+  --neon-orange: #ffae00;
+  --text-main: #e0e6ed;
+  --text-muted: #94a3b8;
+}
+
+/* Контейнер карточки статуса */
+.status-card {
+  position: relative;
+  background: var(--status-bg);
+  border: 1px solid rgba(0, 243, 255, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  color: var(--text-main);
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.1), inset 0 0 20px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  max-width: 500px;
+  margin: 15px auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.status-card:hover {
+  box-shadow: 0 0 30px rgba(188, 19, 254, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.5);
+  border-color: rgba(188, 19, 254, 0.4);
+  transform: translateY(-2px);
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Заголовок статуса */
+.status-title {
+  font-size: 1.4rem;
+  margin: 0;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.status-icon {
+  font-size: 1.2rem;
+  color: var(--neon-green);
+  -webkit-text-fill-color: var(--neon-green);
+  text-shadow: 0 0 10px var(--neon-green);
+  animation: pulse 2s infinite;
+}
+
+.status-id {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  -webkit-text-fill-color: var(--text-muted);
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+/* Анимация пульсации иконки */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+/* Кнопки */
+.actions-row {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-cosmic {
+  background: transparent;
+  border: 1px solid var(--neon-blue);
+  color: var(--neon-blue);
+  padding: 10px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+
+.btn-cosmic:hover {
+  background: var(--neon-blue);
+  color: #000;
+  box-shadow: 0 0 15px var(--neon-blue);
+  transform: scale(1.05);
+}
+
+.btn-cosmic:active {
+  transform: scale(0.98);
+}
+
+.btn-icon {
+  font-size: 1rem;
+}
+
+/* Кнопка редактирования */
+.btn-warning {
+  border-color: #ffae00;
+  color: #ffae00;
+}
+.btn-warning:hover {
+  background: #ffae00;
+  color: #000;
+  box-shadow: 0 0 15px #ffae00;
+}
+
+/* Кнопка удаления */
+.btn-danger {
+  border-color: var(--neon-red);
+  color: var(--neon-red);
+}
+.btn-danger:hover {
+  background: var(--neon-red);
+  color: #fff;
+  box-shadow: 0 0 15px var(--neon-red);
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 500px) {
+  .status-card {
+    padding: 1.5rem;
+    margin: 10px;
+  }
+
+  .status-title {
+    font-size: 1.1rem;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .actions-row {
+    width: 100%;
+  }
+
+  .btn-cosmic {
+    flex: 1;
+    min-width: 140px;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,52 @@
+<div class="dashboard-container">
+  <div class="stars"></div>
+
+  <div class="dashboard-content">
+    <!-- Секция задач -->
+    <section class="dashboard-section">
+      <h1 class="section-title">
+        <span class="title-icon">📋</span>
+        Активные задачи
+      </h1>
+
+      <div class="items-grid">
+        @for (task of tasks; track task.id) {
+          <app-task-item
+            [task]="task"
+            (changeStatus)="onChangeTaskStatus($event)"
+          >
+          </app-task-item>
+        }
+        @empty {
+          <div class="empty-state">
+            <span class="empty-icon">🌌</span>
+            <p>Активных задач нет</p>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Секция проектов -->
+    <section class="dashboard-section">
+      <h1 class="section-title">
+        <span class="title-icon">🚀</span>
+        Активные проекты
+      </h1>
+
+      <div class="items-grid">
+        @for (project of projects; track project.id) {
+          <app-project-item
+            [project]="project"
+          >
+          </app-project-item>
+        }
+        @empty {
+          <div class="empty-state">
+            <span class="empty-icon">🌠</span>
+            <p>Активных проектов нет</p>
+          </div>
+        }
+      </div>
+    </section>
+  </div>
+</div>

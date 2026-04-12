@@ -1,0 +1,37 @@
+<div class="space-card">
+  <!-- Декоративный фон (звезды) -->
+  <div class="stars"></div>
+
+  <div class="content-wrapper">
+    <h2 class="cosmic-title">{{project.name}}</h2>
+
+    <div class="info-grid">
+      <p class="cosmic-text"><span class="label">Статус:</span> {{project.statusName}}</p>
+      <p class="cosmic-text"><span class="label">Бюджет:</span> {{project.cost}} ₽</p>
+      <p class="cosmic-text"><span class="label">Начало:</span> {{project.startDate | date: 'dd.MM.yyyy'}}</p>
+      <p class="cosmic-text"><span class="label">Дедлайн:</span> {{project.deadline | date: 'dd.MM.yyyy'}}</p>
+    </div>
+
+    @if (project.description){
+      <div class="description-box">
+        <p class="cosmic-desc">{{project.description}}</p>
+      </div>
+    }
+
+    <div class="actions-row">
+      <button class="btn-cosmic btn-primary" [routerLink]="['/project', project.id, 'sprint']">Спринты</button>
+      <button class="btn-cosmic btn-secondary" [routerLink]="['/project', project.id, 'team', 'view']">Команда</button>
+    </div>
+
+    @if (authService.isAdmin() && showAdminPanel()) {
+      <div class="admin-panel">
+        <div class="admin-badge">Панель администратора</div>
+        <div class="actions-row">
+          <button class="btn-cosmic btn-success" [routerLink]="['/project', project.id, 'team', 'add']">Добавить сотрудников</button>
+          <button class="btn-cosmic btn-warning" [routerLink]="['/project/edit', project.id]">Редактировать</button>
+          <button class="btn-cosmic btn-danger" (click)="onDelete()">Удалить</button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

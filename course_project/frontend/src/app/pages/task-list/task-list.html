@@ -1,0 +1,46 @@
+@if (errorMessage) {
+  <div class="error-message">
+    <span class="error-icon">⚠</span>
+    {{errorMessage}}
+  </div>
+}
+<div class="tasks-list-page">
+  <div class="stars"></div>
+
+  <div class="glass-card tasks-card">
+
+    <div class="back-section">
+      <app-back-button></app-back-button>
+    </div>
+
+    <div class="page-header">
+      @if (authService.isAdmin()) {
+        <div class="header-actions">
+          <button routerLink='new' class="btn-neon btn-neon-primary">
+            <span class="btn-icon">+</span> Создать задачу
+          </button>
+        </div>
+      }
+
+      <h1 class="text-gradient page-title">
+        <span class="title-icon">📋</span>
+        Список задач
+      </h1>
+    </div>
+
+    <div class="tasks-list">
+      @for (task of tasks; track task.id) {
+        <app-task-item
+          [task]="task"
+          (deleteTask)="onDeleteTask($event)"
+        >
+        </app-task-item>
+      } @empty {
+        <div class="empty-state">
+          <span class="empty-icon">🌌</span>
+          <p>Задач нет</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>

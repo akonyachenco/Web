@@ -1,0 +1,20 @@
+<div class="status-card">
+  <div class="stars"></div>
+
+  <div class="content-wrapper">
+    <h2 class="status-title">
+      <span class="status-icon">◉</span>
+      Статус: {{status.name}}
+      <span class="status-id">(id:{{status.id}})</span>
+    </h2>
+
+    <div class="actions-row">
+      <button class="btn-cosmic btn-warning" (click)="onEdit()">
+        <span class="btn-icon">✎</span> Редактировать
+      </button>
+      <button class="btn-cosmic btn-danger" (click)="onDelete()">
+        <span class="btn-icon">🗑</span> Удалить
+      </button>
+    </div>
+  </div>
+</div>

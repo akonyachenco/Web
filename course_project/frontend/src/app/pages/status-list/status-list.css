@@ -1,0 +1,164 @@
+/* Контейнер страницы */
+.statuses-page {
+  position: relative;
+  min-height: 100vh;
+  padding: 2rem;
+  padding-top: 100px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* Карточка страницы */
+.statuses-card {
+  width: 100%;
+  max-width: 700px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Заголовок страницы */
+.page-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Кнопка добавления статуса */
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.page-title {
+  font-size: 2rem;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.title-icon {
+  font-size: 2.2rem;
+  text-shadow: 0 0 20px var(--neon-purple);
+  display: inline-block;
+}
+
+/* Список статусов */
+.statuses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Заголовок формы */
+.form-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-title {
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* Форма */
+.status-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  color: var(--text-main);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.label-icon {
+  font-size: 1rem;
+  text-shadow: 0 0 5px var(--neon-blue);
+}
+
+/* Сообщения об ошибках полей */
+.input-error-message {
+  color: var(--neon-red);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Кнопки формы */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 1rem;
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 768px) {
+  .statuses-page {
+    padding: 1rem;
+    padding-top: 120px;
+  }
+
+  .statuses-card {
+    padding: 1.5rem;
+  }
+
+  .page-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .header-actions {
+    justify-content: center;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  .page-title {
+    font-size: 1.3rem;
+  }
+
+  .title-icon {
+    font-size: 1.8rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn-neon {
+    width: 100%;
+  }
+}

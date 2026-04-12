@@ -12,7 +12,6 @@ import ru.ssau.todo.exception.*;
 import ru.ssau.todo.service.CustomUserDetailsService;
 import ru.ssau.todo.service.TokenService;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController

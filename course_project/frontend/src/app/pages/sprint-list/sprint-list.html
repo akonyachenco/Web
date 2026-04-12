@@ -1,0 +1,48 @@
+@if (errorMessage) {
+  <div class="error-message">
+    <span class="error-icon">⚠</span>
+    {{errorMessage}}
+  </div>
+}
+
+<div class="sprints-list-page">
+  <div class="stars"></div>
+
+  <div class="glass-card sprints-card">
+
+
+    <div class="back-section">
+      <app-back-button></app-back-button>
+    </div>
+
+    <div class="page-header">
+      @if (authService.isAdmin()) {
+        <div class="header-actions">
+          <button routerLink='new' class="btn-neon btn-neon-primary">
+            <span class="btn-icon">+</span> Создать спринт
+          </button>
+        </div>
+      }
+
+      <h1 class="text-gradient page-title">
+        <span class="title-icon">🏃</span>
+        Список спринтов
+      </h1>
+    </div>
+
+    <div class="sprints-grid">
+      @for (sprint of sprintList; track sprint.id) {
+        <app-sprint-item
+          [sprint]="sprint"
+          (deleteSprint)="onDeleteSprint($event)"
+        >
+        </app-sprint-item>
+      } @empty {
+        <div class="empty-state">
+          <span class="empty-icon">🌌</span>
+          <p>Спринтов нет</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>

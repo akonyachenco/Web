@@ -1,0 +1,219 @@
+:host {
+  --sprint-bg: rgba(20, 24, 50, 0.7);
+  --neon-blue: #00f3ff;
+  --neon-purple: #bc13fe;
+  --neon-green: #0aff60;
+  --neon-red: #ff2a6d;
+  --neon-orange: #ffae00;
+  --text-main: #e0e6ed;
+  --text-muted: #94a3b8;
+}
+
+/* Контейнер карточки спринта */
+.sprint-card {
+  position: relative;
+  background: var(--sprint-bg);
+  border: 1px solid rgba(0, 243, 255, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  color: var(--text-main);
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.1), inset 0 0 20px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  max-width: 600px;
+  margin: 20px auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.sprint-card:hover {
+  box-shadow: 0 0 30px rgba(188, 19, 254, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.5);
+  border-color: rgba(188, 19, 254, 0.4);
+  transform: translateY(-2px);
+}
+
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+/* Заголовок спринта */
+.sprint-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+}
+
+/* Сетка информации */
+.sprint-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.sprint-info-item {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.8rem;
+  border-radius: 8px;
+  border-left: 3px solid var(--neon-blue);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sprint-info-item .label {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.sprint-info-item .value {
+  color: var(--text-main);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Цветовые акценты для разных полей */
+.status-item {
+  border-left-color: var(--neon-green);
+}
+
+.goal-item {
+  border-left-color: var(--neon-purple);
+  grid-column: 1 / -1;
+}
+
+.start-date-item {
+  border-left-color: var(--neon-blue);
+}
+
+.end-date-item {
+  border-left-color: var(--neon-orange);
+}
+
+/* Админ секция */
+.admin-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.5rem;
+  margin-top: 1rem;
+}
+
+.admin-badge {
+  display: inline-block;
+  background: rgba(255, 42, 109, 0.2);
+  color: var(--neon-red);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--neon-red);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Кнопки */
+.actions-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-cosmic {
+  background: transparent;
+  border: 1px solid var(--neon-blue);
+  color: var(--neon-blue);
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-cosmic:hover {
+  background: var(--neon-blue);
+  color: #000;
+  box-shadow: 0 0 15px var(--neon-blue);
+  transform: scale(1.05);
+}
+
+.btn-cosmic:active {
+  transform: scale(0.98);
+}
+
+.btn-icon {
+  font-size: 1rem;
+}
+
+/* Цвета кнопок */
+.btn-primary {
+  border-color: var(--neon-blue);
+  color: var(--neon-blue);
+}
+.btn-primary:hover {
+  background: var(--neon-blue);
+  color: #000;
+  box-shadow: 0 0 15px var(--neon-blue);
+}
+
+.btn-warning {
+  border-color: #ffae00;
+  color: #ffae00;
+}
+.btn-warning:hover {
+  background: #ffae00;
+  color: #000;
+  box-shadow: 0 0 15px #ffae00;
+}
+
+.btn-danger {
+  border-color: var(--neon-red);
+  color: var(--neon-red);
+}
+.btn-danger:hover {
+  background: var(--neon-red);
+  color: #fff;
+  box-shadow: 0 0 15px var(--neon-red);
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 500px) {
+  .sprint-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .goal-item {
+    grid-column: 1;
+  }
+
+  .btn-cosmic {
+    width: 100%;
+  }
+
+  .sprint-card {
+    padding: 1.5rem;
+    margin: 15px;
+  }
+
+  .sprint-title {
+    font-size: 1.4rem;
+  }
+}

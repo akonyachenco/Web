@@ -1,0 +1,193 @@
+/* Основные переменные для космической темы */
+:host {
+  --space-bg: #0b0d17;
+  --space-card-bg: rgba(20, 24, 50, 0.7);
+  --neon-blue: #00f3ff;
+  --neon-purple: #bc13fe;
+  --neon-green: #0aff60;
+  --neon-red: #ff2a6d;
+  --text-main: #e0e6ed;
+  --text-muted: #94a3b8;
+}
+
+/* Контейнер карточки */
+.space-card {
+  position: relative;
+  background: var(--space-card-bg);
+  border: 1px solid rgba(0, 243, 255, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  color: var(--text-main);
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.1), inset 0 0 20px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  max-width: 600px;
+  margin: 20px auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.space-card:hover {
+  box-shadow: 0 0 30px rgba(188, 19, 254, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.5);
+  border-color: rgba(188, 19, 254, 0.4);
+}
+
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+/* Заголовок */
+.cosmic-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+}
+
+/* Сетка информации */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.cosmic-text {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.8rem;
+  border-radius: 8px;
+  border-left: 3px solid var(--neon-blue);
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.cosmic-text .label {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  display: block;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Описание */
+.description-box {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.cosmic-desc {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--text-main);
+}
+
+/* Кнопки */
+.actions-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.btn-cosmic {
+  background: transparent;
+  border: 1px solid var(--neon-blue);
+  color: var(--neon-blue);
+  padding: 10px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  min-width: 120px;
+}
+
+.btn-cosmic:hover {
+  background: var(--neon-blue);
+  color: #000;
+  box-shadow: 0 0 15px var(--neon-blue);
+}
+
+/* Разные цвета кнопок */
+.btn-secondary {
+  border-color: var(--neon-purple);
+  color: var(--neon-purple);
+}
+.btn-secondary:hover {
+  background: var(--neon-purple);
+  color: #fff;
+  box-shadow: 0 0 15px var(--neon-purple);
+}
+
+.btn-success {
+  border-color: var(--neon-green);
+  color: var(--neon-green);
+}
+.btn-success:hover {
+  background: var(--neon-green);
+  color: #000;
+  box-shadow: 0 0 15px var(--neon-green);
+}
+
+.btn-warning {
+  border-color: #ffae00;
+  color: #ffae00;
+}
+.btn-warning:hover {
+  background: #ffae00;
+  color: #000;
+  box-shadow: 0 0 15px #ffae00;
+}
+
+.btn-danger {
+  border-color: var(--neon-red);
+  color: var(--neon-red);
+}
+.btn-danger:hover {
+  background: var(--neon-red);
+  color: #fff;
+  box-shadow: 0 0 15px var(--neon-red);
+}
+
+/* Админ панель */
+.admin-panel {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.5rem;
+  margin-top: 1rem;
+}
+
+.admin-badge {
+  display: inline-block;
+  background: rgba(255, 42, 109, 0.2);
+  color: var(--neon-red);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--neon-red);
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 500px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  .btn-cosmic {
+    width: 100%;
+  }
+}

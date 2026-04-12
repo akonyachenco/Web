@@ -1,0 +1,112 @@
+@if (errorMessage) {
+  <div class="error-message">
+    <span class="error-icon">⚠</span>
+    {{errorMessage}}
+  </div>
+}
+
+<div class="register-container">
+  <div class="stars"></div>
+
+  <div class="register-card">
+    <div class="register-header">
+      <div class="logo-icon">✨</div>
+      <h1 class="register-title">РЕГИСТРАЦИЯ</h1>
+    </div>
+
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="register-form">
+      <div class="form-group">
+        <label class="form-label">
+          <span class="label-icon">👤</span>
+          Имя пользователя
+        </label>
+        <input
+          type="text"
+          placeholder="Введите логин"
+          formControlName="username"
+          class="form-input"
+          [class.input-error]="username?.invalid && username?.touched"
+        >
+        @if (username?.invalid && username?.touched) {
+          <div class="input-error-message">
+            Имя пользователя обязательно для заполнения
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          <span class="label-icon">🔒</span>
+          Пароль
+        </label>
+        <input
+          type="password"
+          placeholder="Введите пароль"
+          formControlName="password"
+          class="form-input"
+          [class.input-error]="password?.invalid && password?.touched"
+        >
+        @if (password?.invalid && password?.touched) {
+          <div class="input-error-message">
+            Пароль обязателен для заполнения
+          </div>
+        }
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">
+            <span class="label-icon">📛</span>
+            Имя
+          </label>
+          <input
+            type="text"
+            placeholder="Введите имя"
+            formControlName="firstName"
+            class="form-input"
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <span class="label-icon">📛</span>
+            Фамилия
+          </label>
+          <input
+            type="text"
+            placeholder="Введите фамилию"
+            formControlName="lastName"
+            class="form-input"
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          <span class="label-icon">💼</span>
+          Должность
+        </label>
+        <input
+          type="text"
+          placeholder="Введите должность"
+          formControlName="position"
+          class="form-input"
+        >
+      </div>
+
+      <button type="submit" class="btn-submit" [disabled]="form.invalid">
+        <span class="btn-icon">🚀</span>
+        Подтвердить
+      </button>
+    </form>
+
+    <div class="login-link">
+      <span>Уже есть аккаунт?</span>
+      <a routerLink="/login" class="login-btn">
+        <span class="btn-icon">🔐</span>
+        Войти
+      </a>
+    </div>
+  </div>
+</div>

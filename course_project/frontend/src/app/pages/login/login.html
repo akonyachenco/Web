@@ -1,0 +1,71 @@
+@if (errorMessage) {
+  <div class="error-message">
+    <span class="error-icon">⚠</span>
+    {{errorMessage}}
+  </div>
+}
+
+<div class="login-container">
+  <div class="stars"></div>
+
+  <div class="login-card">
+    <div class="login-header">
+      <div class="logo-icon">🚀</div>
+      <h1 class="login-title">ВХОД</h1>
+    </div>
+
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label class="form-label">
+          <span class="label-icon">👤</span>
+          Имя пользователя
+        </label>
+        <input
+          type="text"
+          placeholder="Введите логин"
+          formControlName="username"
+          class="form-input"
+          [class.input-error]="username?.invalid && username?.touched"
+        >
+        @if (username?.invalid && username?.touched) {
+          <div class="input-error-message">
+            Имя пользователя обязательно для заполнения
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          <span class="label-icon">🔒</span>
+          Пароль
+        </label>
+        <input
+          type="password"
+          placeholder="Введите пароль"
+          formControlName="password"
+          class="form-input"
+          [class.input-error]="password?.invalid && password?.touched"
+        >
+        @if (password?.invalid && password?.touched) {
+          <div class="input-error-message">
+            Пароль обязателен для заполнения
+          </div>
+        }
+      </div>
+
+      <button type="submit" class="btn-submit" [disabled]="form.invalid">
+        <span class="btn-icon">🔐</span>
+        Войти
+      </button>
+    </form>
+
+    <div class="register-link">
+      <span>Нет аккаунта?</span>
+      <a routerLink="/register" class="register-btn">
+        <span class="btn-icon">✨</span>
+        Регистрация
+      </a>
+    </div>
+  </div>
+</div>

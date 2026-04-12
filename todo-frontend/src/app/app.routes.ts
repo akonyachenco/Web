@@ -3,7 +3,6 @@ import {LoginComponent} from './pages/login/login';
 import {TaskListComponent} from './pages/task-list/task-list';
 import {EditTaskComponent} from './pages/edit-task/edit-task';
 import {canActivateAuth} from './auth/access.guard';
-import {TaskItemComponent} from './components/task-item/task-item';
 
 export const routes: Routes = [
   {path: "", redirectTo: "login", pathMatch: "full"},

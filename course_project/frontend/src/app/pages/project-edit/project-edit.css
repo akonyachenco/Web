@@ -1,0 +1,139 @@
+/* Контейнер страницы */
+.project-form-page {
+  position: relative;
+  min-height: 100vh;
+  padding: 2rem;
+  padding-top: 100px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* Карточка формы */
+.form-card {
+  width: 100%;
+  max-width: 600px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Секция кнопки назад */
+.back-section {
+  margin-bottom: 1.5rem;
+}
+
+/* Заголовок формы */
+.form-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-title {
+  font-size: 2rem;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.title-icon {
+  font-size: 2.2rem;
+  text-shadow: 0 0 10px var(--neon-purple);
+  display: inline-block;
+}
+
+/* Форма */
+.project-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Строка для двух полей */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-label {
+  color: var(--text-main);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.label-icon {
+  font-size: 1rem;
+  text-shadow: 0 0 5px var(--neon-blue);
+}
+
+/* Сообщения об ошибках полей */
+.input-error-message {
+  color: var(--neon-red);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Кнопки формы */
+.form-actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 1rem;
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 768px) {
+  .project-form-page {
+    padding: 1rem;
+    padding-top: 120px;
+  }
+
+  .form-card {
+    padding: 1.5rem;
+  }
+
+  .form-title {
+    font-size: 1.5rem;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .form-title {
+    font-size: 1.3rem;
+  }
+
+  .title-icon {
+    font-size: 1.8rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn-neon {
+    width: 100%;
+  }
+}

@@ -1,0 +1,60 @@
+<div class="employee-card">
+  <div class="stars"></div>
+
+  <div class="content-wrapper">
+    <div class="employee-header">
+      <div class="employee-avatar">
+        <span class="avatar-icon">👤</span>
+      </div>
+      <h3 class="employee-title">{{employee.username}}</h3>
+    </div>
+
+    <div class="employee-info">
+      @if (employee.firstName) {
+        <div class="info-row">
+          <span class="info-label">Имя:</span>
+          <span class="info-value">{{employee.firstName}}</span>
+        </div>
+      }
+      @if (employee.lastName) {
+        <div class="info-row">
+          <span class="info-label">Фамилия:</span>
+          <span class="info-value">{{employee.lastName}}</span>
+        </div>
+      }
+      @if (employee.position) {
+        <div class="info-row position-row">
+          <span class="info-label">Должность:</span>
+          <span class="info-value">{{employee.position}}</span>
+        </div>
+      }
+    </div>
+
+    @if (authService.isAdmin()) {
+      <div class="admin-section">
+        <div class="admin-badge">Панель администратора</div>
+        <div class="actions-row">
+          @switch (mode()) {
+            @case ('add') {
+              <label class="checkbox-label">
+                <input type="checkbox" class="cosmic-checkbox" (change)="onChange()">
+                <span class="checkmark"></span>
+                <span class="checkbox-text">Добавить в команду</span>
+              </label>
+            }
+            @case ('view') {
+              <button class="btn-cosmic btn-danger" (click)="onRemove()">
+                <span class="btn-icon">🗑</span> Исключить
+              </button>
+            }
+            @case ('setTaskEmployee') {
+              <button class="btn-cosmic btn-success" (click)="onSetEmployee()">
+                <span class="btn-icon">✓</span> Выбрать
+              </button>
+            }
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

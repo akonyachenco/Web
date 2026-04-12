@@ -1,0 +1,127 @@
+@if (errorMessage) {
+  <div class="error-message">
+    <span class="error-icon">⚠</span>
+    {{errorMessage}}
+  </div>
+}
+
+<div class="sprint-form-page">
+  <div class="stars"></div>
+
+  <div class="glass-card form-card">
+
+    <div class="back-section">
+      <app-back-button></app-back-button>
+    </div>
+
+    <div class="form-header">
+      <h1 class="text-gradient form-title">
+        <span class="title-icon">🏃</span>
+        Спринт
+      </h1>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="sprint-form">
+      <div class="form-group">
+        <label class="form-label">
+          <span class="label-icon">📝</span>
+          Название
+        </label>
+        <input
+          type="text"
+          placeholder="Введите название спринта"
+          formControlName="name"
+          class="input-cosmic"
+          [class.error]="name?.invalid && name?.touched"
+        >
+        @if (name?.invalid && name?.touched) {
+          <div class="input-error-message">
+            Название обязательно
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          <span class="label-icon">📊</span>
+          Статус
+        </label>
+        <select formControlName="statusName" class="input-cosmic">
+          @for (status of statusList; track status) {
+            <option [value]="status">
+              {{status}}
+            </option>
+          }
+        </select>
+        @if (statusName?.invalid && statusName?.touched) {
+          <div class="input-error-message">
+            Статус обязателен
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          <span class="label-icon">🎯</span>
+          Цель
+        </label>
+        <input
+          type="text"
+          placeholder="Введите цель спринта"
+          formControlName="goal"
+          class="input-cosmic"
+          [class.error]="goal?.invalid && goal?.touched"
+        >
+        @if (goal?.invalid && goal?.touched) {
+          <div class="input-error-message">
+            Цель обязательна
+          </div>
+        }
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">
+            <span class="label-icon">📅</span>
+            Дата начала
+          </label>
+          <input
+            type="date"
+            formControlName="startDate"
+            class="input-cosmic"
+            [class.error]="startDate?.invalid && startDate?.touched"
+          >
+          @if (startDate?.invalid && startDate?.touched) {
+            <div class="input-error-message">
+              Дата начала обязательна
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <span class="label-icon">⏰</span>
+            Дата завершения
+          </label>
+          <input
+            type="date"
+            formControlName="endDate"
+            class="input-cosmic"
+            [class.error]="endDate?.invalid && endDate?.touched"
+          >
+          @if (endDate?.invalid && endDate?.touched) {
+            <div class="input-error-message">
+              Дата завершения обязательна
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-neon btn-neon-success" [disabled]="form.invalid">
+          <span class="btn-icon">✓</span> Сохранить
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

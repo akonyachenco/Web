@@ -1,0 +1,165 @@
+:host {
+  --dashboard-bg: #0b0d17;
+  --section-bg: rgba(20, 24, 50, 0.5);
+  --neon-blue: #00f3ff;
+  --neon-purple: #bc13fe;
+  --neon-green: #0aff60;
+  --neon-red: #ff2a6d;
+  --neon-orange: #ffae00;
+  --text-main: #e0e6ed;
+  --text-muted: #94a3b8;
+}
+
+/* Контейнер дашборда */
+.dashboard-container {
+  position: relative;
+  min-height: 100vh;
+  background: var(--dashboard-bg);
+  padding: 2rem;
+  padding-top: 100px; /* Отступ для навигации */
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Эффект звезд на фоне */
+.stars {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image:
+    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
+    radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
+  background-size: 550px 550px, 350px 350px, 250px 250px;
+  background-position: 0 0, 40px 60px, 130px 270px;
+  opacity: 0.2;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dashboard-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* Секции дашборда */
+.dashboard-section {
+  background: var(--section-bg);
+  border: 1px solid rgba(0, 243, 255, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-section:hover {
+  border-color: rgba(188, 19, 254, 0.4);
+  box-shadow: 0 0 30px rgba(188, 19, 254, 0.2);
+}
+
+/* Заголовки секций */
+.section-title {
+  font-size: 2rem;
+  margin: 0 0 2rem 0;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.title-icon {
+  font-size: 2.2rem;
+  -webkit-text-fill-color: var(--neon-orange);
+  filter: drop-shadow(0 0 10px var(--neon-orange));
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Сетка элементов */
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+    padding-top: 120px;
+  }
+
+  .dashboard-section {
+    padding: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .title-icon {
+    font-size: 1.8rem;
+  }
+
+  .items-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .empty-icon {
+    font-size: 3rem;
+  }
+
+  .empty-state p {
+    font-size: 1rem;
+  }
+}
+
+/* Адаптив для планшетов */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  }
+}
+
+/* Скроллбар в космическом стиле */
+.dashboard-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.dashboard-container::-webkit-scrollbar-track {
+  background: rgba(11, 13, 27, 0.5);
+  border-radius: 5px;
+}
+
+.dashboard-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--neon-blue), var(--neon-purple));
+  border-radius: 5px;
+  border: 2px solid rgba(11, 13, 27, 0.5);
+}
+
+.dashboard-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--neon-purple), var(--neon-red));
+  box-shadow: 0 0 10px var(--neon-purple);
+}

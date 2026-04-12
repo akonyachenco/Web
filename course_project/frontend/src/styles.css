@@ -1,0 +1,420 @@
+/* ============================================
+   ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ (CSS Custom Properties)
+   ============================================ */
+:root {
+  /* Цвета фона */
+  --space-bg: #0b0d17;
+  --space-bg-gradient: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  --card-bg: rgba(20, 24, 50, 0.8);
+
+  /* Неоновые цвета */
+  --neon-blue: #00f3ff;
+  --neon-purple: #bc13fe;
+  --neon-green: #0aff60;
+  --neon-red: #ff2a6d;
+  --neon-orange: #ffae00;
+
+  /* Текст */
+  --text-main: #e0e6ed;
+  --text-muted: #94a3b8;
+
+  /* Ошибки */
+  --error-bg: rgba(255, 42, 109, 0.2);
+
+  /* Шрифты */
+  --font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* Отступы */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+
+  /* Радиусы */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* Тени */
+  --shadow-glow-blue: 0 0 20px rgba(0, 243, 255, 0.3);
+  --shadow-glow-purple: 0 0 20px rgba(188, 19, 254, 0.3);
+  --shadow-glow-red: 0 0 20px rgba(255, 42, 109, 0.3);
+}
+
+/* ============================================
+   БАЗОВЫЕ СТИЛИ СТРАНИЦЫ
+   ============================================ */
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--space-bg);
+  background-image: var(--space-bg-gradient);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Звездный фон (глобальный) */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px);
+  background-size: 550px 550px, 350px 350px;
+  opacity: 0.15;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ============================================
+   ГЛОБАЛЬНЫЙ СКРОЛЛБАР
+   ============================================ */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(11, 13, 27, 0.5);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--neon-blue), var(--neon-purple));
+  border-radius: 5px;
+  border: 2px solid rgba(11, 13, 27, 0.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--neon-purple), var(--neon-red));
+  box-shadow: 0 0 10px var(--neon-purple);
+}
+
+/* ============================================
+   ГЛОБАЛЬНЫЕ АНИМАЦИИ
+   ============================================ */
+@keyframes starsMove {
+  from {
+    background-position: 0 0, 40px 60px, 130px 270px;
+  }
+  to {
+    background-position: 550px 550px, 390px 410px, 680px 820px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(188, 19, 254, 0.7);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* ============================================
+   ГЛОБАЛЬНЫЕ УТИЛИТАРНЫЕ КЛАССЫ
+   ============================================ */
+
+/* Звездный фон для компонентов */
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
+    radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
+  background-size: 550px 550px, 350px 350px, 250px 250px;
+  background-position: 0 0, 40px 60px, 130px 270px;
+  opacity: 0.3;
+  z-index: 0;
+  pointer-events: none;
+  animation: starsMove 100s linear infinite;
+}
+
+/* Glassmorphism карточка */
+.glass-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(0, 243, 255, 0.2);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-glow-blue), inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Неоновая кнопка (базовый стиль) */
+.btn-neon {
+  background: transparent;
+  border: 1px solid var(--neon-blue);
+  color: var(--neon-blue);
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  font-family: var(--font-family);
+}
+
+.btn-neon:hover {
+  background: var(--neon-blue);
+  color: #000;
+  box-shadow: 0 0 15px var(--neon-blue);
+}
+
+/* Варианты кнопок */
+.btn-neon-primary {
+  border-color: var(--neon-blue);
+  color: var(--neon-blue);
+}
+.btn-neon-primary:hover {
+  background: var(--neon-blue);
+  box-shadow: 0 0 15px var(--neon-blue);
+}
+
+.btn-neon-success {
+  border-color: var(--neon-green);
+  color: var(--neon-green);
+}
+.btn-neon-success:hover {
+  background: var(--neon-green);
+  box-shadow: 0 0 15px var(--neon-green);
+}
+
+.btn-neon-warning {
+  border-color: var(--neon-orange);
+  color: var(--neon-orange);
+}
+.btn-neon-warning:hover {
+  background: var(--neon-orange);
+  box-shadow: 0 0 15px var(--neon-orange);
+}
+
+.btn-neon-danger {
+  border-color: var(--neon-red);
+  color: var(--neon-red);
+}
+.btn-neon-danger:hover {
+  background: var(--neon-red);
+  box-shadow: 0 0 15px var(--neon-red);
+}
+
+/* Поле ввода */
+.input-cosmic {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  color: var(--text-main);
+  font-size: 1rem;
+  font-family: var(--font-family);
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+select.input-cosmic {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2300f3ff' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 35px;
+  cursor: pointer;
+}
+
+select.input-cosmic option {
+  background: var(--space-bg);
+  color: var(--text-main);
+}
+
+.input-cosmic::placeholder {
+  color: var(--text-muted);
+}
+
+.input-cosmic:focus {
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+  background: rgba(0, 243, 255, 0.05);
+}
+
+.input-cosmic.error {
+  border-color: var(--neon-red);
+  box-shadow: 0 0 15px rgba(255, 42, 109, 0.3);
+}
+
+/* Градиентный текст */
+.text-gradient {
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+}
+
+/* Ссылки */
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+/* Сброс стилей */
+* {
+  box-sizing: border-box;
+}
+
+/* ============================================
+   АДАПТИВНЫЕ УТИЛИТЫ
+   ============================================ */
+@media (max-width: 768px) {
+  :root {
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+  }
+}
+
+@media (max-width: 500px) {
+  :root {
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+  }
+}
+
+/* ============================================
+   СООБЩЕНИЯ ОБ ОШИБКАХ
+   ============================================ */
+.error-message {
+  position: fixed;           /* ✅ Фиксированное позиционирование */
+  top: 80px;                 /* Отступ сверху (под навигацией) */
+  left: 50%;
+  transform: translateX(-50%); /* ✅ Центрирование по горизонтали */
+  z-index: 9999;             /* ✅ Поверх всех элементов */
+
+  background: var(--error-bg);
+  border: 1px solid var(--neon-red);
+  border-radius: var(--radius-md);
+  padding: 1rem 2rem;
+  color: var(--neon-red);
+  font-weight: 500;
+  animation: slideDown 0.3s ease-out;
+
+  /* Тени для читаемости */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
+  0 0 20px rgba(255, 42, 109, 0.3);
+  backdrop-filter: blur(10px);
+
+  /* Для иконки */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 300px;
+  max-width: 90%;
+}
+
+.error-icon {
+  font-size: 1.2rem;
+  filter: drop-shadow(0 0 5px var(--neon-red));
+  flex-shrink: 0;
+}
+
+/* Анимация появления сверху */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 500px) {
+  .error-message {
+    top: 70px;
+    left: 10px;
+    right: 10px;
+    transform: none;
+    min-width: unset;
+    max-width: unset;
+  }
+}
+
+
+/* Пустое состояние */
+.empty-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 20px rgba(188, 19, 254, 0.5));
+  animation: pulse 2s infinite;
+}
+
+.empty-state p {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+
+

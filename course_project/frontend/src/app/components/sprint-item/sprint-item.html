@@ -1,0 +1,46 @@
+<div class="sprint-card">
+  <div class="stars"></div>
+
+  <div class="content-wrapper">
+    <h2 class="sprint-title">{{sprint.name}}</h2>
+
+    <div class="sprint-info-grid">
+      <div class="sprint-info-item status-item">
+        <span class="label">Статус:</span>
+        <span class="value">{{sprint.statusName}}</span>
+      </div>
+
+      <div class="sprint-info-item goal-item">
+        <span class="label">Цель:</span>
+        <span class="value">{{sprint.goal}}</span>
+      </div>
+
+      <div class="sprint-info-item start-date-item">
+        <span class="label">Дата начала:</span>
+        <span class="value">{{sprint.startDate | date: 'dd.MM.yyyy'}}</span>
+      </div>
+
+      <div class="sprint-info-item end-date-item">
+        <span class="label">Дата завершения:</span>
+        <span class="value">{{sprint.endDate | date: 'dd.MM.yyyy'}}</span>
+      </div>
+    </div>
+
+    @if (authService.isAdmin()) {
+      <div class="admin-section">
+        <div class="admin-badge">Панель администратора</div>
+        <div class="actions-row">
+          <button class="btn-cosmic btn-primary" [routerLink]="[sprint.id, 'task']">
+            <span class="btn-icon">📋</span> Задачи
+          </button>
+          <button class="btn-cosmic btn-warning" [routerLink]="['edit', sprint.id]">
+            <span class="btn-icon">✎</span> Ред.
+          </button>
+          <button class="btn-cosmic btn-danger" (click)="onDelete()">
+            <span class="btn-icon">🗑</span> Удалить
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

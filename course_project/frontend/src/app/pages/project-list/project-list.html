@@ -1,0 +1,40 @@
+@if (errorMessage) {
+  <div class="error-message">
+    <span class="error-icon">⚠</span>
+    {{errorMessage}}
+  </div>
+}
+<div class="projects-list-page">
+  <div class="stars"></div>
+
+  <div class="glass-card projects-card">
+
+    <div class="page-header">
+      <div class="header-actions">
+        <button routerLink="/project/new" class="btn-neon btn-neon-primary">
+          <span class="btn-icon">+</span> Создать проект
+        </button>
+      </div>
+
+      <h1 class="text-gradient page-title">
+        <span class="title-icon">🚀</span>
+        Список проектов
+      </h1>
+    </div>
+
+    <div class="projects-grid">
+      @for (project of projectList; track project.id) {
+        <app-project-item
+          [project]="project"
+          (deleteProject)="onDeleteProject($event)"
+        >
+        </app-project-item>
+      } @empty {
+        <div class="empty-state">
+          <span class="empty-icon">🌌</span>
+          <p>Проектов нет</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>

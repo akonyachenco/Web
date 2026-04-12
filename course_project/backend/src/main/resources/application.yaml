@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: db
+
+
+  jpa:
+    open-in-view: false
+

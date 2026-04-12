@@ -1,0 +1,27 @@
+<div class="my-tasks-page">
+  <div class="stars"></div>
+
+  <div class="glass-card tasks-card">
+    <div class="page-header">
+      <h1 class="text-gradient page-title">
+        <span class="title-icon">📋</span>
+        Список моих задач
+      </h1>
+    </div>
+
+    <div class="tasks-list">
+      @for (task of tasks; track task.id) {
+        <app-task-item
+          [task]="task"
+          (changeStatus)="onChangeTaskStatus($event)"
+        >
+        </app-task-item>
+      } @empty {
+        <div class="empty-state">
+          <span class="empty-icon">🌌</span>
+          <p>Задач нет</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>

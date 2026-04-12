@@ -1,0 +1,85 @@
+@if (errorMessage) {
+  <div class="error-message">
+    <span class="error-icon">⚠</span>
+    {{errorMessage}}
+  </div>
+}
+
+<div class="statuses-page">
+  <div class="stars"></div>
+
+  <div class="glass-card statuses-card">
+
+
+    @if (!createMode() && !editMode()) {
+      <!-- Режим списка -->
+      <div class="page-header">
+        <div class="header-actions">
+          <button (click)="createMode.set(true)" class="btn-neon btn-neon-primary">
+            <span class="btn-icon">+</span> Добавить статус
+          </button>
+        </div>
+
+        <h1 class="text-gradient page-title">
+          <span class="title-icon">📊</span>
+          Список статусов
+        </h1>
+      </div>
+
+      <div class="statuses-list">
+        @for (status of statusList; track status.id) {
+          <app-status-item
+            [status]="status"
+            (editStatus)="onEditStatus($event)"
+            (deleteStatus)="onDeleteStatus($event)"
+          >
+          </app-status-item>
+        } @empty {
+          <div class="empty-state">
+            <span class="empty-icon">🌌</span>
+            <p>Статусов нет</p>
+          </div>
+        }
+      </div>
+    }
+    @else {
+      <!-- Режим формы (создание/редактирование) -->
+      <div class="form-header">
+        <h1 class="text-gradient form-title">
+          <span class="title-icon">{{editMode() ? '✎' : '+'}}</span>
+          {{editMode() ? 'Редактирование статуса' : 'Новый статус'}}
+        </h1>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="status-form">
+        <div class="form-group">
+          <label class="form-label">
+            <span class="label-icon">📝</span>
+            Название статуса
+          </label>
+          <input
+            type="text"
+            placeholder="Введите название статуса"
+            formControlName="name"
+            class="input-cosmic"
+            [class.error]="name?.invalid && name?.touched"
+          >
+          @if (name?.invalid && name?.touched) {
+            <div class="input-error-message">
+              Название обязательно для заполнения
+            </div>
+          }
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-neon btn-neon-success" [disabled]="form.invalid">
+            <span class="btn-icon">✓</span> Сохранить
+          </button>
+          <button type="button" class="btn-neon btn-neon-danger" (click)="onCancel()">
+            <span class="btn-icon">✕</span> Назад
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+</div>

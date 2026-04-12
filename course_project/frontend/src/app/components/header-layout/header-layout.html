@@ -1,0 +1,25 @@
+<nav class="space-navbar">
+  <div class="nav-brand">
+    <span class="logo-text">TASK<span class="highlight">TRACKER</span></span>
+  </div>
+
+  <div class="nav-links">
+    <a routerLink="" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }"  class="nav-item">Главная</a>
+    <a routerLink="/my-projects" routerLinkActive="active-link" class="nav-item">Мои проекты</a>
+    <a routerLink="/my-tasks" routerLinkActive="active-link" class="nav-item">Мои задачи</a>
+
+    @if (authService.isAdmin()) {
+      <div class="admin-divider"></div>
+      <a routerLink="statuses" routerLinkActive="active-link" class="nav-item admin-item">Статусы</a>
+      <a routerLink="projects" routerLinkActive="active-link" class="nav-item admin-item">Проекты</a>
+    }
+  </div>
+
+  <div class="nav-actions">
+    <button (click)="logout()" class="btn-logout">
+      <span class="icon">⏻</span> Выход
+    </button>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

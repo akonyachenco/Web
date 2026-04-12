@@ -1,0 +1,292 @@
+:host {
+  --employee-bg: rgba(20, 24, 50, 0.7);
+  --neon-blue: #00f3ff;
+  --neon-purple: #bc13fe;
+  --neon-green: #0aff60;
+  --neon-red: #ff2a6d;
+  --neon-orange: #ffae00;
+  --text-main: #e0e6ed;
+  --text-muted: #94a3b8;
+}
+
+/* Контейнер карточки сотрудника */
+.employee-card {
+  position: relative;
+  background: var(--employee-bg);
+  border: 1px solid rgba(0, 243, 255, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  color: var(--text-main);
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.1), inset 0 0 20px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  max-width: 500px;
+  margin: 15px auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.employee-card:hover {
+  box-shadow: 0 0 30px rgba(188, 19, 254, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.5);
+  border-color: rgba(188, 19, 254, 0.4);
+  transform: translateY(-2px);
+}
+
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+/* Заголовок с аватаром */
+.employee-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.employee-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+  animation: glow 3s infinite;
+}
+
+.avatar-icon {
+  font-size: 1.5rem;
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(188, 19, 254, 0.7);
+  }
+}
+
+.employee-title {
+  font-size: 1.3rem;
+  margin: 0;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+}
+
+/* Информация о сотруднике */
+.employee-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border-left: 3px solid var(--neon-blue);
+}
+
+.info-label {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.info-value {
+  color: var(--text-main);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-align: right;
+}
+
+.position-row {
+  border-left-color: var(--neon-purple);
+}
+
+/* Админ секция */
+.admin-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.5rem;
+  margin-top: 1rem;
+}
+
+.admin-badge {
+  display: inline-block;
+  background: rgba(255, 42, 109, 0.2);
+  color: var(--neon-red);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--neon-red);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Кнопки */
+.actions-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-cosmic {
+  background: transparent;
+  border: 1px solid var(--neon-blue);
+  color: var(--neon-blue);
+  padding: 10px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  flex: 1;
+  min-width: 140px;
+}
+
+.btn-cosmic:hover {
+  background: var(--neon-blue);
+  color: #000;
+  box-shadow: 0 0 15px var(--neon-blue);
+  transform: scale(1.05);
+}
+
+.btn-cosmic:active {
+  transform: scale(0.98);
+}
+
+.btn-icon {
+  font-size: 1rem;
+}
+
+.btn-danger {
+  border-color: var(--neon-red);
+  color: var(--neon-red);
+}
+.btn-danger:hover {
+  background: var(--neon-red);
+  color: #fff;
+  box-shadow: 0 0 15px var(--neon-red);
+}
+
+.btn-success {
+  border-color: var(--neon-green);
+  color: var(--neon-green);
+}
+.btn-success:hover {
+  background: var(--neon-green);
+  color: #000;
+  box-shadow: 0 0 15px var(--neon-green);
+}
+
+/* Чекбокс в космическом стиле */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 10px 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  transition: all 0.3s ease;
+  width: 100%;
+  justify-content: center;
+}
+
+.checkbox-label:hover {
+  background: rgba(0, 243, 255, 0.1);
+  border-color: var(--neon-blue);
+}
+
+.cosmic-checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--neon-blue);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.cosmic-checkbox:checked {
+  background: var(--neon-blue);
+  box-shadow: 0 0 10px var(--neon-blue);
+}
+
+.cosmic-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.checkbox-text {
+  color: var(--text-main);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 500px) {
+  .employee-card {
+    padding: 1.5rem;
+    margin: 10px;
+  }
+
+  .employee-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .info-row {
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+  }
+
+  .info-value {
+    text-align: center;
+  }
+
+  .btn-cosmic {
+    width: 100%;
+  }
+
+  .checkbox-label {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

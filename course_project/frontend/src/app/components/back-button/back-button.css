@@ -1,0 +1,82 @@
+:host {
+  --neon-blue: #00f3ff;
+  --neon-purple: #bc13fe;
+  --text-main: #e0e6ed;
+}
+
+/* Кнопка Назад */
+.btn-back {
+  background: transparent;
+  border: 1px solid var(--neon-blue);
+  color: var(--neon-blue);
+  padding: 10px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.btn-back:hover {
+  background: var(--neon-blue);
+  color: #000;
+  box-shadow: 0 0 15px var(--neon-blue);
+  transform: translateX(-3px);
+}
+
+.btn-back:active {
+  transform: translateX(-5px) scale(0.98);
+}
+
+.btn-icon {
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.btn-back:hover .btn-icon {
+  transform: translateX(-3px);
+}
+
+.btn-text {
+  position: relative;
+  z-index: 1;
+}
+
+/* Эффект скользящего градиента при наведении */
+.btn-back::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 243, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.btn-back:hover::before {
+  left: 100%;
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 500px) {
+  .btn-back {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    width: 100%;
+  }
+}

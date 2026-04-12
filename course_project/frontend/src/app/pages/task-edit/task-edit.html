@@ -1,0 +1,173 @@
+@if (errorMessage) {
+  <div class="error-message">
+    <span class="error-icon">⚠</span>
+    {{errorMessage}}
+  </div>
+}
+
+<div class="task-form-page">
+  <div class="stars"></div>
+
+  <div class="glass-card task-card">
+
+
+    <div class="back-section">
+      <app-back-button></app-back-button>
+    </div>
+
+    @if (!addEmployee()) {
+      <!-- Режим формы задачи -->
+      <div class="form-header">
+        <h1 class="text-gradient form-title">
+          <span class="title-icon">📋</span>
+          Задача
+        </h1>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="task-form">
+        <div class="form-group">
+          <label class="form-label">
+            <span class="label-icon">📝</span>
+            Заголовок
+          </label>
+          <input
+            type="text"
+            placeholder="Введите заголовок"
+            formControlName="title"
+            class="input-cosmic"
+            [class.error]="title?.invalid && title?.touched"
+          >
+          @if (title?.invalid && title?.touched) {
+            <div class="input-error-message">
+              Заголовок обязателен
+            </div>
+          }
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">
+              <span class="label-icon">⚡</span>
+              Приоритет
+            </label>
+            <select formControlName="priority" class="input-cosmic">
+              @for (priority of priorityList; track priority) {
+                <option [value]="priority">
+                  {{priorityLabels[priority]}}
+                </option>
+              }
+            </select>
+            @if (priority?.invalid && priority?.touched) {
+              <div class="input-error-message">
+                Приоритет обязателен
+              </div>
+            }
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <span class="label-icon">📊</span>
+              Статус
+            </label>
+            <select formControlName="statusName" class="input-cosmic">
+              @for (status of statusList; track status) {
+                <option [value]="status">
+                  {{status}}
+                </option>
+              }
+            </select>
+            @if (statusName?.invalid && statusName?.touched) {
+              <div class="input-error-message">
+                Статус обязателен
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <span class="label-icon">📄</span>
+            Описание
+          </label>
+          <input
+            type="text"
+            placeholder="Введите описание"
+            formControlName="description"
+            class="input-cosmic"
+          >
+        </div>
+
+        <!-- Секция сотрудника -->
+        <div class="employee-section">
+          <div class="section-header">
+            <h2 class="text-gradient section-title">
+              <span class="title-icon">👤</span>
+              Сотрудник
+            </h2>
+          </div>
+
+          @if (employee()) {
+            <div class="employee-card-wrapper">
+              <app-employee-item
+                [mode]="mode"
+                [employee]="employee()!"
+              >
+              </app-employee-item>
+            </div>
+            <button type="button" class="btn-neon btn-neon-warning" (click)="onChange()">
+              <span class="btn-icon">✎</span> Изменить сотрудника
+            </button>
+          }
+          @else {
+            <div class="employee-empty">
+              <span class="empty-icon">🌌</span>
+              <p>Необходимо добавить сотрудника</p>
+            </div>
+            <button type="button" class="btn-neon btn-neon-primary" (click)="onChange()">
+              <span class="btn-icon">+</span> Добавить сотрудника
+            </button>
+          }
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-neon btn-neon-success" [disabled]="!employee()">
+            <span class="btn-icon">✓</span> Сохранить
+          </button>
+        </div>
+      </form>
+    }
+    @else {
+      <!-- Режим выбора сотрудника -->
+      <div class="employee-select-mode">
+        <div class="form-header">
+          <h1 class="text-gradient form-title">
+            <span class="title-icon">👥</span>
+            Список сотрудников проекта
+          </h1>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-neon btn-neon-danger" (click)="addEmployee.set(false); mode.set('')">
+            <span class="btn-icon">✕</span> Отмена
+          </button>
+        </div>
+
+        <div class="employees-list">
+          @for (employee of employeeList; track employee.id) {
+            <app-employee-item
+              [mode]="mode"
+              [employee]="employee"
+              (setTaskEmployee)="onSetEmployee($event)"
+            >
+            </app-employee-item>
+          } @empty {
+            <div class="empty-state">
+              <span class="empty-icon">🌌</span>
+              <p>Сотрудников нет</p>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

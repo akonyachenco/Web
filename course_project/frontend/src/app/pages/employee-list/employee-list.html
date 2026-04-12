@@ -1,0 +1,56 @@
+@if (errorMessage) {
+  <div class="error-message">
+    <span class="error-icon">⚠</span>
+    {{errorMessage}}
+  </div>
+}
+
+<div class="team-page">
+  <div class="stars"></div>
+
+  <div class="glass-card team-card">
+
+    <div class="back-section">
+      <app-back-button></app-back-button>
+    </div>
+
+    @if (mode()) {
+      <div class="team-content">
+        @if (mode() === 'add') {
+          <div class="actions-bar">
+            <button
+              class="btn-neon btn-neon-success"
+              [disabled]="employeeIds().length === 0"
+              (click)="addToTeam()">
+              <span class="btn-icon">✓</span> Добавить
+            </button>
+          </div>
+        }
+
+        <div class="team-header">
+          <h1 class="text-gradient team-title">
+            <span class="title-icon">{{mode() === 'add' ? '👥' : '🚀'}}</span>
+            {{mode() === 'add' ? 'Список сотрудников для добавления' : 'Список сотрудников проекта'}}
+          </h1>
+        </div>
+
+        <div class="employees-grid">
+          @for (employee of employeeList; track employee.id) {
+            <app-employee-item
+              [employee]="employee"
+              [mode]="mode"
+              (changeCheckbox)="onChangeCheckbox($event)"
+              (removeFromTeam)="onRemoveFromTeam($event)"
+            >
+            </app-employee-item>
+          } @empty {
+            <div class="empty-state">
+              <span class="empty-icon">🌌</span>
+              <p>{{mode() === 'add' ? 'Сотрудников для добавления нет' : 'Сотрудников нет'}}</p>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

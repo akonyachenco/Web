@@ -1,0 +1,229 @@
+:host {
+  --task-bg: rgba(20, 24, 50, 0.7);
+  --neon-blue: #00f3ff;
+  --neon-purple: #bc13fe;
+  --neon-green: #0aff60;
+  --neon-red: #ff2a6d;
+  --neon-orange: #ffae00;
+  --text-main: #e0e6ed;
+  --text-muted: #94a3b8;
+}
+
+/* Контейнер карточки задачи */
+.task-card {
+  position: relative;
+  background: var(--task-bg);
+  border: 1px solid rgba(0, 243, 255, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  color: var(--text-main);
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.1), inset 0 0 20px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  max-width: 600px;
+  margin: 20px auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.task-card:hover {
+  box-shadow: 0 0 30px rgba(188, 19, 254, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.5);
+  border-color: rgba(188, 19, 254, 0.4);
+  transform: translateY(-2px);
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+/* Заголовок задачи */
+.task-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+}
+
+/* Сетка информации */
+.task-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.task-info-item {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.8rem;
+  border-radius: 8px;
+  border-left: 3px solid var(--neon-blue);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.task-info-item .label {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.task-info-item .value {
+  color: var(--text-main);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Цвета приоритетов */
+.priority-low { color: var(--neon-blue); }
+.priority-medium { color: var(--neon-orange); }
+.priority-high { color: var(--neon-red); }
+
+.priority-item {
+  border-left-color: var(--neon-orange);
+}
+
+.status-item {
+  border-left-color: var(--neon-green);
+}
+
+/* Описание */
+.description-section {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.section-label {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.description-content {
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+/* Админ секция */
+.admin-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.5rem;
+  margin-top: 1rem;
+}
+
+.admin-badge {
+  display: inline-block;
+  background: rgba(255, 42, 109, 0.2);
+  color: var(--neon-red);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--neon-red);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.employee-section {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+/* Кнопки */
+.actions-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-cosmic {
+  background: transparent;
+  border: 1px solid var(--neon-blue);
+  color: var(--neon-blue);
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  min-width: 120px;
+}
+
+.btn-cosmic:hover {
+  background: var(--neon-blue);
+  color: #000;
+  box-shadow: 0 0 15px var(--neon-blue);
+}
+
+.btn-large {
+  padding: 12px 24px;
+  font-size: 1rem;
+}
+
+.btn-warning {
+  border-color: #ffae00;
+  color: #ffae00;
+}
+.btn-warning:hover {
+  background: #ffae00;
+  color: #000;
+  box-shadow: 0 0 15px #ffae00;
+}
+
+.btn-danger {
+  border-color: var(--neon-red);
+  color: var(--neon-red);
+}
+.btn-danger:hover {
+  background: var(--neon-red);
+  color: #fff;
+  box-shadow: 0 0 15px var(--neon-red);
+}
+
+.btn-success {
+  border-color: var(--neon-green);
+  color: var(--neon-green);
+}
+.btn-success:hover {
+  background: var(--neon-green);
+  color: #000;
+  box-shadow: 0 0 15px var(--neon-green);
+}
+
+/* Адаптив */
+@media (max-width: 500px) {
+  .task-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .btn-cosmic {
+    width: 100%;
+  }
+
+  .task-card {
+    padding: 1.5rem;
+  }
+
+  .task-title {
+    font-size: 1.4rem;
+  }
+}

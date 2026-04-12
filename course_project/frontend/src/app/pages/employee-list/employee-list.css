@@ -1,0 +1,126 @@
+/* Контейнер страницы */
+.team-page {
+  position: relative;
+  min-height: 100vh;
+  padding: 2rem;
+  padding-top: 100px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* Карточка команды */
+.team-card {
+  width: 100%;
+  max-width: 900px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Секция кнопки назад */
+.back-section {
+  margin-bottom: 2rem;
+}
+
+/* Контент команды */
+.team-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Панель действий */
+.actions-bar {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Заголовок команды */
+.team-header {
+  text-align: center;
+}
+
+.team-title {
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.title-icon {
+  font-size: 2rem;
+  text-shadow: 0 0 20px var(--neon-purple);
+  display: inline-block;
+}
+
+/* Сетка сотрудников */
+.employees-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Пустое состояние */
+.empty-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-lg);
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 20px var(--neon-purple));
+  animation: pulse 2s infinite;
+}
+
+.empty-state p {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+
+
+/* Адаптив для мобильных */
+@media (max-width: 500px) {
+  .team-page {
+    padding: 1rem;
+    padding-top: 120px;
+  }
+
+  .team-card {
+    padding: 1.5rem;
+  }
+
+  .team-title {
+    font-size: 1.4rem;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .employees-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions-bar {
+    justify-content: center;
+  }
+
+  .btn-neon {
+    width: 100%;
+  }
+}

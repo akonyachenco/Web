@@ -1,0 +1,70 @@
+<div class="task-card">
+  <div class="stars"></div>
+
+  <div class="content-wrapper">
+    <h3 class="task-title">{{task.title}}</h3>
+
+    <div class="task-info-grid">
+      <div class="task-info-item priority-item">
+        <span class="label">Приоритет:</span>
+        <span class="value priority-{{task.priority}}">{{priorityLabels[task.priority]}}</span>
+      </div>
+
+      <div class="task-info-item status-item">
+        <span class="label">Статус:</span>
+        <span class="value">{{task.statusName}}</span>
+      </div>
+
+      <div class="task-info-item date-item">
+        <span class="label">Дата создания:</span>
+        <span class="value">{{task.createdAt | date: 'dd.MM.yyyy | hh:mm'}}</span>
+      </div>
+
+      <div class="task-info-item project-item">
+        <span class="label">Проект:</span>
+        <span class="value">{{project()?.name}}</span>
+      </div>
+
+      <div class="task-info-item sprint-item">
+        <span class="label">Спринт:</span>
+        <span class="value">{{sprint()?.name}}</span>
+      </div>
+    </div>
+
+    @if (task.description) {
+      <div class="description-section">
+        <span class="section-label">Описание:</span>
+        <div class="description-content">{{task.description}}</div>
+      </div>
+    }
+
+    @if (authService.isAdmin() && showAdminPanel()) {
+      <div class="admin-section">
+        <div class="admin-badge">Панель администратора</div>
+
+        @if (employee()) {
+          <div class="employee-section">
+            <span class="section-label">Сотрудник:</span>
+            <app-employee-item
+              [employee]="employee()!"
+              [mode]="mode"
+            >
+            </app-employee-item>
+          </div>
+        }
+
+        <div class="actions-row">
+          <button class="btn-cosmic btn-warning" [routerLink]="['edit', task.id]">Редактировать</button>
+          <button class="btn-cosmic btn-danger" (click)="onDelete()">Удалить</button>
+        </div>
+      </div>
+    }
+    @else if (!showAdminPanel() && ACTIVE_STATUSES.includes(task.statusName)) {
+      <div class="actions-row">
+        <button class="btn-cosmic btn-success btn-large" (click)="onChangeStatus()">
+          {{task.statusName === 'Запланировано' ? 'Приступить к выполнению' : 'Задача выполнена'}}
+        </button>
+      </div>
+    }
+  </div>
+</div>
